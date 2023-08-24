@@ -27,3 +27,15 @@ display: inline-block 允许在元素上设置宽度和高度。
 
 设置字体，备用字体可以与首选字体使用空格分开
 font-family: sans-serif;
+
+hr元素：主题分割（水平分割线）元素；
+
+当链接被实际访问时，你可以使用类似 
+a:visited { propertyName: propertyValue; } 的 pseudo-selector 来更改链接的属性；
+
+当鼠标悬停在链接上时，你可以使用类似于 
+a:hover { propertyName: propertyValue; } 的 pseudo-selector 更改链接的属性。
+
+当链接被实际点击时，你可以使用类似 
+a:active { propertyName: propertyValue; } 的 pseudo-selector 来更改链接的属性。
+
