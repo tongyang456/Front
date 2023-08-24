@@ -1,0 +1,29 @@
+<link href="styles.css" rel="stylesheet"/>
+Stylesheet -- 定义一个外部加载的样式表 
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+使页面样式在移动端看起来与在桌面或笔记本电脑上相似
+
+text-align: center;
+设置元素居中： 
+
+margin-left: auto;
+margin-right: auto;
+将 div 在水平方向上居中。
+
+类选择器
+.class-name {
+  styles
+}
+
+设置背景图片
+background-image: url(http://127.0.0.1/cat.jpg)
+
+为 item 的 class 为嵌套在元素中任何位置的所有 p 元素设置样式
+.item p { }
+
+如果设置了 display: inline-block，将保留上下外边距/内边距，而 display: inline 则不会。
+display: inline-block 允许在元素上设置宽度和高度。
+
+设置字体，备用字体可以与首选字体使用空格分开
+font-family: sans-serif;
