@@ -1,0 +1,58 @@
+定位元素向右对齐
+text-align: right;
+
+rgb(red, green, blue);
+每个红色、绿色和蓝色值都是一个从 0 到 255 的数字。 0 表示该颜色的 0%，并且是黑色。 255 意味着该颜色的 100%；
+
+使用 CSS 将颜色应用于元素的一种非常常见的方法是使用十六进制或 hex 值。 虽然十六进制值听起来很复杂，但它们实际上只是 RGB 值的另一种形式。
+十六进制颜色值以 # 字符开头，从 0-9 和 A-F 取六个字符。 第一对字符代表红色，第二对代表绿色，第三对代表蓝色。 例如，#4B5320。
+
+HSL 颜色模型或色调、饱和度和亮度是表示颜色的另一种方式。
+
+CSS hsl 函数
+hsl 函数接受 3 个值：0 到 360 的数字表示色调，0 到 100 的百分比表示饱和度，0 到 100 的百分比表示亮度。
+如果你想象一个色轮，色调红色是 0 度，绿色是 120 度，蓝色是 240 度。
+饱和度指纯色的颜色强度从 0% 或灰色到 100%。 你必须给饱和度和亮度值添加百分比标志 %。
+亮度是颜色出现的亮度，从 0% 或全黑到 100% 或全白，其中 50% 为中性。
+
+使用 hsl 函数将 background-color 属性更改为纯蓝色。 将色调设置为 240，将饱和度设置为 100%，将亮度设置为 50%。
+background-color: hsl(240, 100%, 50%);
+
+CSS linear-gradient 函数可让你控制沿线的过渡方向以及使用的颜色。
+linear-gradient 函数实际上创建了一个 image 元素，并且通常与可以接受图像作为一个值的 background 属性配对。
+linear-gradient(gradientDirection, color1, color2, ...);
+gradientDirection 是表明过渡的线的方向。 color1 和 color2 是颜色参数，它们是将在过渡本身中使用的颜色。 这些可以是任何类型的颜色，包括颜色关键字、十六进制、rgb 或 hsl。
+
+红-绿渐变，过渡的线的方向90degree;
+background: linear-gradient(90deg, rgb(255, 0, 0), rgb(0, 255, 0));
+
+红-黑渐变中，从红色到黑色的过渡发生在渐变线的 90% 处
+linear-gradient(90deg, red 90%, black);
+
+使用 CSS opacity 属性，你可以控制元素的不透明或透明程度。 使用值 0 或 0%，元素将完全透明，而在 1.0 或 100% 时，元素将像默认情况下一样完全不透明。
+opacity: 0.5;
+
+rgba 函数的工作方式与 rgb 函数类似，但在 0 到 1.0 之间多取一个数字作为 alpha 通道
+rgba(redValue, greenValue, blueValue, alphaValue);
+
+div 元素的 display 属性默认是 block。 因此，当两个 block 元素彼此相邻时，它们会像实际的块一样堆叠。
+要将两个 div 元素放置在同一行上，需要将它们的 display 属性设置为 inline-block。
+
+border-left 简写属性允许你同时设置左边框的宽度、样式和颜色。
+border-left: width style color;
+border-left: 10px solid black;
+
+box-shadow 属性允许你在元素周围应用一个或多个阴影。
+box-shadow: offsetX offsetY color;
+box-shadow: offsetX offsetY blurRadius color;
+如果不设置 blurRadius 的值，则默认为 0，并产生锐利的边缘。 blurRadius 的值越大，模糊效果就越大。
+box-shadow: offsetX offsetY blurRadius spreadRadius color;
+想把阴影进一步扩大呢？ 你可以使用可选的 spreadRadius 值，与 blurRadius 一样，spreadRadius 的值如果没有设置，则默认为 0。
+
+下面是 offsetX 和 offsetY 值的作用：
+offsetX 和 offsetY 都接受数字值，单位是 px 和其他 CSS 单位
+正 offsetX 值将阴影向右移动，负值将它向左移动
+正 offsetY 值将阴影向下移动，负值将它向上移动
+如果你想要 offsetX 和 offsetY 其中一个值为零，或两个都为零（0），那么你不需要添加单位。 每种浏览器都知道零意味着没有变化。
+
+
