@@ -1,0 +1,48 @@
+将 html 规则选择器添加到 CSS 文件，并将 box-sizing 属性设置为 border-box
+html {
+  box-sizing: border-box;
+}
+
+你可以将 box-sizing 属性设置为 inherit，这将告诉目标元素使用与父元素相同的值。
+你还需要定位伪元素，它们是跟随选择器的特殊关键字。 你将使用的两个伪元素是 ::before 和 ::after 伪元素。
+::before 选择器创建一个伪元素，它是被选元素的第一个子元素，
+::after 选择器创建一个伪元素，它是最后一个子元素的选定元素。 
+现在，创建一个 CSS 选择器以使用 * 定位所有元素，并使用 ::before 和 ::after 包含伪元素。 将 box-sizing 属性设置为 inherit。
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+. 类选择器
+# id选择器
+
+.key.black--key::after 选择器。 这将针对具有类 key black--key 的元素，并在 HTML 中选择这些元素之后的伪元素。
+content 属性用于设置或覆盖元素的内容。 
+默认情况下，::before 和 ::after 伪选择器创建的伪元素是空的，这些元素不会被渲染到页面上。 
+将 content 属性设置为空字符串 "" 将确保元素在仍然为空的情况下呈现到页面。
+.key.black--key::after {
+  background-color: #1d1e22;
+  content: "";
+}
+
+@media @ 规则，也被称为媒体查询，用于根据指定条件应用 CSS。 媒体查询通常基于视图宽度的 max-width 和 min-width 属性来应用指定 CSS 。
+在下面的示例中，当视图端口为 960px 宽及以下时，padding 将应用 .card 类。
+@media (max-width: 960px) {
+  .card {
+    padding: 2rem;
+  }
+
+  .keys {
+    width: 318px;
+  }
+}
+
+逻辑操作符可以用来构建更复杂的媒体查询。 and 逻辑运算符用于查询两个媒体条件。
+例如，一个针对在 500px 到 1000px 之间显示宽度的媒体查询：
+@media (max-width: 1199px) and (min-width: 769px) {
+  #piano{
+    width: 675px;
+  }
+  .keys{
+    width: 633px;
+  }
+}
