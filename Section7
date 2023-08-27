@@ -1,0 +1,6 @@
+:not 伪选择器可用于选择所有与给定 CSS 规则不匹配的元素。
+div:not(#example) {
+  color: red;
+}
+上面选择了所有 div 元素没有 example 的 id。
+
