@@ -1,0 +1,38 @@
+img 元素上的 loading 属性可以设置为 lazy
+以告诉浏览器在需要（例如，当用户将图像滚动到视图中时）的时候才获取图像资源。 
+另外一个好处是，延迟加载的元素在加载非延迟元素之前不会加载——这意味着互联网连接速度较慢的用户可以查看你的页面的内容，而无需等待图像加载。
+
+Referer HTTP 标头包含有关用户可能从其访问的页面的地址或 URL 的信息。 
+例如，此信息可用于分析以跟踪有多少用户从你的页面访问 freecodecamp.org。 将 rel 属性设置为 noreferrer，会从 HTTP 请求中省略此信息。
+
+CSS repeat() 函数用于重复一个值，而不是手动写出它，这对网格布局很有帮助。 
+例如，将 grid-template-columns 属性设置为 repeat(20, 200px) 将创建 20 列，每列 200px 宽。
+
+请记住，grid-column 属性确定元素开始和结束的列。 有时你不确定网格将有多少列，但你希望元素停在最后一列。 为此，你可以使用 -1 作为结束列。
+
+object-fit 属性告诉浏览器如何在其容器中定位元素。 
+在这种情况下，cover 会将图像设置为填充容器，并根据需要进行裁剪以避免更改宽高比。
+
+创建一个 .author-name a:hover 选择器，并将 background-color 属性设置为 #306203。
+这将只为 .author-name 中的 a 元素创建悬停效果，在背景中显示原始的 freeCodeCamp 绿色。
+.author-name a:hover {
+  background-color: #306203;
+}
+
+CSS Grid 的默认设置将根据需要创建额外的行，这与 Flexbox 不同。 
+给 .social-icons 选择器一个 grid-template-columns 属性，设置为 repeat(5, 1fr)，以将图标排列在一个单一的排。
+如果你想添加更多社交图标，但将它们保持在同一行，则需要更新 grid-template-columns 以创建其他列。 作为替代方案，你可以使用 grid-auto-flow 属性。
+此属性将 row 或 column 作为第一个值，第二个值可选 dense。 grid-auto-flow 使用自动放置算法来调整网格布局。 
+将其设置为 column，将告诉算法根据需要为内容创建新列。 dense 值允许算法回溯并用较小的项目填充网格中的空白，这可能导致项目出现乱序。
+
+很像 Flexbox，使用 CSS Grid，你可以使用 align-items 和 justify-items 对齐网格项目的内容。 
+align-items 将沿列轴对齐子元素，而 justify-items 将沿行轴对齐子元素。
+
+::first-letter 伪选择器允许你定位元素文本内容中的第一个字母。
+创建一个 .first-paragraph::first-letter 选择器，并将 font-size 属性设置为 6rem。 同时给它一个 color 属性，设置为 orangered，以使其突出显示。
+.first-paragraph::first-letter {
+  font-size: 6rem;
+  color: orangered;
+}
+
+step:70
