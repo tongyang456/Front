@@ -1,0 +1,43 @@
+html简单结构：
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+  </body>
+</html>
+
+CSS 中的 box-sizing 属性定义了 user agent 应该如何计算一个元素的总宽度和总高度
+设置为 content-box：默认值，标准盒子模型。width 与 height 只包括内容的宽和高，不包括边框（border），内边距（padding），外边距（margin）。
+设置为 border-box：width 和 height 属性包括内容，内边距和边框，但不包括外边距。
+
+Flexbox 是一种一维 CSS 布局方法，侧重于内容的流动。 它提供了控制容器在容器中的间隔和对齐方式的能力。
+若要将元素设置为使用 Flexbox 布局，请将 display 属性设置为 flex。 这将使元素变成一个 flex 容器。 flex 容器内的直接子元素叫做 flex 项目。
+
+Flexbox 可以被认为有两个轴，主轴和交叉轴。 主轴由 flex-direction 属性决定，有四个可选值：
+row（默认值）：主轴为水平方向，起点在左端。
+row-reverse：主轴为水平方向，起点在右端。
+column：主轴为垂直方向，起点在上沿。
+column-reverse：主轴为垂直方向，起点在下沿。
+注意：轴和方向将因文字方向而异。 上面的值是左至右的文本方向。
+
+flex-wrap 属性确定当 flex 容器太小时项目的排列方式。 
+将此属性设置为 wrap 将允许项目换行到下一行/列（取决于主轴）。 nowrap（默认值）将阻止项目换行，此时项目可能会收缩以自适应或溢出。
+
+justify-content 属性决定了 flex 容器中的项目如何沿主轴对齐，从而影响它们的位置和周围的空间。
+justify-content:center;
+
+align-items 属性沿交叉轴放置弹性内容。 在这种情况下，将 flex-direction 设置为 row，横轴将是垂直的。
+
+
+可以使用 object-fit 属性来确定图像的行为方式，而不是单独设置每个纵横比。
+
+gap 是设置间隙的 CSS 简写形式（也叫作 gutters），是行和列之间的空白。 gap 属性以及 row-gap 和 column-gap 子属性用来设置 flex、grid 和多列布局的间隙。 可以将此属性应用到容器元素。
+
+::after 用来创建一个伪元素，作为已选中元素的最后一个子元素。 你可以用它在最后一个图像后添加一个空元素。 
+如果你设置其 width 为和图像相同，如果是两列布局，它会将最后一张图像挤到左边。 现在它居中显示，因为你在 flex 容器上设置了 justify-content: center。
+
