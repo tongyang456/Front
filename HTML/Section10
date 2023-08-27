@@ -1,0 +1,10 @@
+CSS 定位允许您设置元素在浏览器中的位置。它具有 position 属性，您可以设置为static, absolute, relative, sticky or fixed。
+设置元素的 position 属性后，可以通过为一个或多个top, right, left, or bottom属性设置像素或百分比值来移动元素。
+static是所有元素的默认定位。如果将其分配给元素，则无法移动top, right, left, or bottom。
+.cat-head {
+  position: static;
+  top: 100px;
+  left: 100px;
+}
+
+step:17
