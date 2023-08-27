@@ -1,1 +1,98 @@
+你将要编写的 CSS 是一组通用属性，用于确保元素在视觉上完全隐藏。
+span[class~="sr-only"] 选择器将选择任何 span 元素，其 class 包括 sr-only。 创建该选择器，并将其 border 属性设置为 0。
+span[class~="sr-only"]{
+  border: 0;
+}
 
+CSS clip 属性用于定义元素的可见部分。 设置 span[class~="sr-only"] 选择器的 clip 属性为 rect(1px, 1px, 1px, 1px)。
+span[class~="sr-only"]{
+  clip:rect(1px, 1px, 1px, 1px);
+}
+
+clip-path 属性决定了 clip 属性应该采用的形状。 设置 clip-path 属性的值为 inset(50%)，在元素内剪切形成一个矩形。
+span[class~="sr-only"]{
+  clip-path : inset(50%);
+}
+
+为了防止文本内容溢出，给你的 span[class~="sr-only"] 选择器一个 overflow 属性设置为 hidden 和 white-space 属性设置为 nowrap。
+
+使用 h1 .flex 选择器定位你的 flex 容器。 
+给它一个 display 属性设置为 flex 以启用 flexbox 布局。 
+然后将 flex-direction 属性设置为 column-reverse - 这将从下到上显示嵌套元素。 
+最后，将 gap 属性设置为 1rem，以在元素之间创建一些空间。
+h1 .flex {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 1rem;
+}
+
+:first-of-type 伪选择器用于定位与选择器匹配的第一个元素，:last-of-type 伪选择器的作用正好相反——它以匹配选择器的最后一个元素为目标。 
+创建一个 h1 .flex span:first-of-type 选择器，以定位 .flex 容器中的第一个 span 元素。 请记住，span 元素在视觉上是颠倒的，因此这看起来是页面上的第二个元素。
+h1 .flex span:first-of-type {
+  font-size: 0.7em;
+}
+
+h1 .flex span:last-of-type {
+  font-size: 1.2em;
+}
+
+css下'#'是控制id的
+#years {
+  display: flex;
+  justify-content: flex-end;
+  position: sticky;
+  top: 0;
+  background: #0a0a23;
+  color: #fff;
+}
+
+calc() 函数是一个 CSS 函数，它允许你根据其他值计算一个值。 例如，你可以使用它来计算视口的宽度减去元素的边距：
+.example {
+  margin: 10px;
+  width: calc(100% - 20px);
+}
+
+CSS z-index 属性设置定位元素及其后代元素或 flex 项目的 Z 轴顺序。z-index 较大的重叠元素会覆盖较小的元素。
+
+通过创建 #years span[class] 选择器来设置 #years 元素中的文本样式。 span[class] 语法将针对任何具有 class 属性集的 span 元素，而不管该属性的值如何。
+
+:not() 伪选择器用于定位与选择器不匹配的所有元素
+在这种情况下，我们希望定位没有 sr-only 类的任何 span 元素。 这可以确保之前的 span[class~="sr-only"] 类规则不会被覆盖。
+
+为了不必反复仔细检查你有没有覆盖之前的属性，你可以使用 !important 关键字来确保始终应用这些属性，而不考虑其顺序或特殊性。
+span[class~="sr-only"] {
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  width: 1px !important;
+  position: absolute !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  padding: 0 !important;
+  margin: -1px !important;
+}
+
+将 border-collapse 属性设置为 collapse，这将允许单元格边框折叠成单个边框，而不是每个单元格周围的边框。
+
+[attribute="value"] 选择器针对具有特定值的属性的任何元素。 
+创建一个 tr[class="total"] 选择器，专门针对具有 total 类的 tr 元素。 给它一个 4px double #0a0a23 的底部边框，并使字体加粗。
+tr[class="total"] {
+  border-bottom: 4px double #0a0a23;
+  font-weight: bold;
+}
+
+tr[class="total"] 和 tr.total 之间的主要区别在于：
+前一个将选择类只是 total 的 tr 元素。 
+第二个将选择类包含 total 的 tr 元素。
+
+:nth-of-type() 伪选择器用于根据它们在相同类型的同级中的顺序来定位特定元素。
+使用此伪选择器来定位 total 表行中的第三个 td 元素。 给它一个 0.5rem 的右侧填充。
+tr.total td:nth-of-type(3) {
+  padding-right: 0.5rem;
+}
+
+为你的 tr.total 元素提供鼠标悬停效果，将背景更改为 #99c9ff。
+tr.total:hover {
+  background-color: #99c9ff;
+}
