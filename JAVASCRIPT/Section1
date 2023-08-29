@@ -1,1 +1,25 @@
+已经定义了一个函数 countdown，函数有一个参数（n）。 函数应该基于参数 n 递归调用返回 n 到 1 的连续数字的数组。 
+如果函数以小于 1 的参数调用，函数应该返回空数组。 比如，用 n = 5 调用函数应该返回数组 [5, 4, 3, 2, 1]。 函数必需使用递归函数调用自身，不能使用任何形式的循环。
+function countdown(n){
+  if(n<1) {
+    return [];
+  } else {
+    var arr=countdown(n-1);
+    arr.unshift(n);
+    return arr;
+  }
+}
 
+使用递归来创建一个数字序列
+已经定义好了 rangeOfNumbers 函数，包含两个参数。 函数应该返回一个连续数字数组，startNum 参数开始 endNum 参数截止。 
+开始的数字小于或等于截止数字。 函数必需递归调用自身，不能使用任意形式的循环。 要考虑到 startNum 和 endNum 相同的情况。
+
+function rangeOfNumbers(startNum, endNum) {
+  if(startNum==endNum) {
+    return [startNum];
+  }else{
+    const numArray=rangeOfNumbers(startNum, endNum-1);
+    numArray.push(endNum);
+    return numArray;
+  }
+};
