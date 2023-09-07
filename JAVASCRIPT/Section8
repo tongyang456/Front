@@ -139,3 +139,15 @@ ratings = watchList.map((item)=>({"title":item["Title"],"rating":item["imdbRatin
 // 只修改这一行上面的代码
 
 console.log(JSON.stringify(ratings));
+
+在原型上实现 map 方法
+写一个和 Array.prototype.map() 一样的 Array.prototype.myMap()。 不能使用内置的 map 方法。 在 myMap 方法内，可以使用 this 访问 Array 实例。
+Array.prototype.myMap = function(callback) {
+  const newArray = [];
+  // 只修改这一行下面的代码
+  for(let i = 0; i < this.length; i++) {
+    newArray.push(callback(this[i], i, this));
+  }
+  // 只修改这一行上面的代码
+  return newArray;
+};
