@@ -1,4 +1,4 @@
-let 和 var 的区别：
+let 和 var 的区别(比较 var 和 let 关键字的作用域)：
 1、作用域不同
 var是函数作用域，let是块作用域。
 在函数中声明了var，整个函数内都是有效的，比如说在for循环内定义的一个var变量，实际上其在for循环以外也是可以访问的
@@ -9,11 +9,39 @@ let必须先声明，再使用。
 var有一个变量提升的过程，当整个函数作用域被创建的时候，实际上var定义的变量都会被创建，并且如果此时没有初始化的话，则默认为初始化一个undefined。
 3、let不能被重新定义，但是var是可以的。
 
-默认情况下，一些开发人员更喜欢使用 const 分配所有变量，除非他们知道需要重新分配值。 只有在这种情况下，他们才使用 let。
-但是，重要的是要了解使用 const 分配给变量的对象（包括数组和函数）仍然是可变的。 使用 const 声明只能防止变量标识符的重新分配。
+
+改变一个用 const 声明的数组
+使用 const 分配给变量的对象（包括数组和函数）仍然是可变的。 使用 const 声明只能防止变量标识符的重新分配。
 const s = [5, 7, 2];
 s[0] = 2;
 s[1] = 5;
 s[2] = 7;
 
+
+防止对象改变
 const 声明并不会真的保护数据不被改变。 为了确保数据不被改变，JavaScript 提供了一个函数 Object.freeze。
+function freezeObj() {
+  const MATH_CONSTANTS = {
+    PI: 3.14
+  };
+  // 只修改这一行下面的代码
+  Object.freeze(MATH_CONSTANTS);
+
+  // 只修改这一行上面的代码
+  try {
+    MATH_CONSTANTS.PI = 99;
+  } catch(ex) {
+    console.log(ex);
+  }
+  return MATH_CONSTANTS.PI;
+}
+const PI = freezeObj();
+
+
+使用箭头函数编写简洁的匿名函数
+使用箭头函数的语法重写 myConcat 函数，将 arr2 的内容添加到 arr1。
+var myConcat = function(arr1, arr2) {
+  return arr1.concat(arr2);
+};
+
+console.log(myConcat([1, 2], [3, 4, 5]));
