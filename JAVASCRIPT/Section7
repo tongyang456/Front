@@ -1,0 +1,321 @@
+了解自有属性
+将 canary 的自身属性添加到 ownProps 数组里面。
+function Bird(name) {
+  this.name = name;
+  this.numLegs = 2;
+}
+
+let canary = new Bird("Tweety");
+let ownProps = [];
+// 只修改这一行下面的代码
+for (let property in canary) {
+  if(canary.hasOwnProperty(property)) {
+    ownProps.push(property);
+  }
+}
+
+
+迭代所有属性
+将 beagle 的自身属性都添加到 ownProps 数组里面去。 将 Dog 中所有的 prototype 属性都添加到 prototypeProps 数组中。
+function Dog(name) {
+  this.name = name;
+}
+
+Dog.prototype.numLegs = 4;
+
+let beagle = new Dog("Snoopy");
+
+let ownProps = [];
+let prototypeProps = [];
+
+// 只修改这一行下面的代码
+for (let property in beagle) {
+  if(beagle.hasOwnProperty(property)) {
+    ownProps.push(property);
+  } else {
+    prototypeProps.push(property);
+  }
+}
+
+
+了解构造函数属性
+写一个 joinDogFraternity 函数，传入一个 candidate 参数并使用 constructor 属性来判断传入的 candidate 是不是 Dog 创建的对象实例，如果是，就返回 true，否则返回 false。
+function Dog(name) {
+  this.name = name;
+}
+
+// 只修改这一行下面的代码
+function joinDogFraternity(candidate) {
+  if (candidate.constructor === Dog) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+将原型更改为新对象
+通过给 prototype 设置一个对象，在 Dog 构造函数的 prototype 上添加一个属性 numLegs 以及两个方法：eat() 和 describe()。
+function Dog(name) {
+  this.name = name;
+}
+
+Dog.prototype = {
+  // 只修改这一行下面的代码
+  numLegs: 2,
+  eat: function() {
+    console.log("nom nom nom");
+  },
+  describe: function() {
+    console.log("My name is " + this.name);
+  }
+};
+
+
+更改原型时，记得设置构造函数属性
+给 Dog 的 prototype 对象定义一个 constructor 属性。
+function Dog(name) {
+  this.name = name;
+}
+
+// 只修改这一行下面的代码
+Dog.prototype = {
+  constructor: Dog,
+  numLegs: 4,
+  eat: function() {
+    console.log("nom nom nom");
+  },
+  describe: function() {
+    console.log("My name is " + this.name);
+  }
+};
+
+
+了解对象的原型来自哪里
+使用 isPrototypeOf 方法验证 beagle 的 prototype。
+function Dog(name) {
+  this.name = name;
+}
+
+let beagle = new Dog("Snoopy");
+
+// 只修改这一行下面的代码
+Dog.prototype.isPrototypeOf(beagle);
+
+
+了解原型链
+JavaScript 中所有的对象（除了少数例外）都有自己的 prototype。 而且，对象的 prototype 本身也是一个对象。
+
+function Bird(name) {
+  this.name = name;
+}
+
+typeof Bird.prototype;
+正因为 prototype 是一个对象，所以 prototype 对象也有它自己的 prototype！ 这样看来的话，Bird.prototype 的 prototype 就是 Object.prototype：
+
+Object.prototype.isPrototypeOf(Bird.prototype);
+这有什么作用呢？ 你可能还记得我们在上一个挑战中学到的 hasOwnProperty 方法：
+
+let duck = new Bird("Donald");
+duck.hasOwnProperty("name");
+hasOwnProperty 是定义在 Object.prototype 上的一个方法，尽管在 Bird.prototype 和 duck上并没有定义该方法，但是我们依然可以在这两个对象上访问到。 
+这就是 prototype 链的一个例子。 在这个prototype 链中，Bird 是 duck 的 supertype，而 duck 是 subtype。 Object 则是 Bird 和 duck 实例共同的 supertype。 
+Object 是 JavaScript 中所有对象的 supertype，也就是原型链的最顶层。 因此，所有对象都可以访问 hasOwnProperty 方法。
+
+
+使用继承避免重复
+有一条原则叫做：Don't Repeat Yourself。常以缩写形式 DRY 出现，意思是“不要自己重复”。 
+编写重复代码会产生的问题是：任何改变都需要去多个地方修复所有重复的代码。 这通常意味着我们需要做更多的工作，会产生更高的出错率。
+Cat 和 Bear 重复定义了 eat 方法。 本着 DRY 的原则，通过将 eat 方法移动到 Animal supertype 中来重写你的代码。
+function Cat(name) {
+  this.name = name;
+}
+
+Cat.prototype = {
+  constructor: Cat,
+};
+
+function Bear(name) {
+  this.name = name;
+}
+
+Bear.prototype = {
+  constructor: Bear,
+};
+
+function Animal() { }
+
+Animal.prototype = {
+  constructor: Animal,
+  eat: function() {
+    console.log("nom nom nom");
+  }
+};
+
+
+从超类继承行为
+使用 Object.create 方法给 Animal 创建两个实例：duck 和 beagle。
+function Animal() { }
+
+Animal.prototype = {
+  constructor: Animal,
+  eat: function() {
+    console.log("nom nom nom");
+  }
+};
+
+// 只修改这一行下面的代码
+let duck = Object.create(Animal.prototype);// 修改这一行
+let beagle = Object.create(Animal.prototype); // 修改这一行
+
+
+将子辈的原型设置为父辈的实例
+修改你的代码，实现一个继承自 Animal 的 Dog 实例。
+function Animal() { }
+
+Animal.prototype = {
+  constructor: Animal,
+  eat: function() {
+    console.log("nom nom nom");
+  }
+};
+
+function Dog() { }
+
+// 只修改这一行下面的代码
+Dog.prototype = Object.create(Animal.prototype);
+let beagle = new Dog();
+
+
+重置一个继承的构造函数属性
+修改你的代码，使得 duck.constructor 和 beagle.constructor 返回各自的构造函数。
+function Animal() { }
+function Bird() { }
+function Dog() { }
+
+Bird.prototype = Object.create(Animal.prototype);
+Dog.prototype = Object.create(Animal.prototype);
+
+// 只修改这一行下面的代码
+Bird.prototype.constructor = Bird;
+let duck = new Bird();
+Dog.prototype.constructor = Dog;
+let beagle = new Dog();
+
+
+继承后添加方法
+添加必要的代码，使得 Dog 对象继承 Animal，并且把 Dog 的 prototype上的 constructor 属性设置为 Dog。 
+然后给 Dog 对象添加一个 bark() 方法，这样的话，beagle 将同时拥有 eat() 和 bark() 这两个方法。 bark() 方法中应该输出 Woof! 到控制台。
+function Animal() { }
+Animal.prototype.eat = function() { console.log("nom nom nom"); };
+
+function Dog() { }
+
+// 只修改这一行下面的代码
+Dog.prototype = Object.create(Animal.prototype);
+Dog.prototype.constructor = Dog;
+Dog.prototype.bark = function() {
+  console.log("Woof!");
+};
+// 只修改这一行上面的代码
+
+let beagle = new Dog();
+
+
+重写继承的方法
+在上一个挑战中，我们学习了一个对象可以通过引用另一个对象的 prototype 来继承其属性和行为（或方法）：
+ChildObject.prototype = Object.create(ParentObject.prototype);
+然后，ChildObject 将自己的方法链接到它的 prototype中：
+ChildObject.prototype.methodName = function() {...};
+重写 Penguin 的 fly() 方法，使其返回字符串 Alas, this is a flightless bird.
+function Bird() { }
+
+Bird.prototype.fly = function() { return "I am flying!"; };
+
+function Penguin() { }
+Penguin.prototype = Object.create(Bird.prototype);
+Penguin.prototype.constructor = Penguin;
+
+// 只修改这一行下面的代码
+Penguin.prototype.fly = function() {
+  return "Alas, this is a flightless bird.";
+};
+// 只修改这一行上面的代码
+
+let penguin = new Penguin();
+console.log(penguin.fly());
+
+
+使用 Mixin 在不相关对象之间添加共同行为
+正如你所见，行为是可以通过继承来共享的。 然而，在有些情况下，继承不是最好的解决方案。 
+继承不适用于不相关的对象，比如 Bird 和 Airplane。 虽然它们都可以飞行，但是 Bird 并不是一种 Airplane，反之亦然。
+对于不相关的对象，更好的方法是使用 mixins。 mixin 允许其他对象使用函数集合。
+let flyMixin = function(obj) {
+  obj.fly = function() {
+    console.log("Flying, wooosh!");
+  }
+};
+flyMixin 能接受任何对象，并为其提供 fly 方法。
+创建一个名为 glideMixin 的 mixin，并定义一个 glide 方法。 然后使用 glideMixin 来给 bird 和 boat 赋予滑行（glide）的能力。
+let bird = {
+  name: "Donald",
+  numLegs: 2
+};
+
+let boat = {
+  name: "Warrior",
+  type: "race-boat"
+};
+
+// 只修改这一行下面的代码
+let glideMixin = function(obj){
+  obj.glide = function(){
+    console.log("Gliding, wooosh!");
+  }
+};
+glideMixin(bird);
+glideMixin(boat);
+
+
+使用闭包保护对象内的属性不被外部修改
+使属性私有化最简单的方法就是在构造函数中创建变量。 可以将该变量范围限定在构造函数中，而不是全局可用。 这样，属性只能由构造函数中的方法访问和更改。
+更改在 Bird 函数中声明的 weight 方法，使其成为私有变量。 然后，创建一个返回 weight 值 15 的 getWeight 方法。
+function Bird() {
+  let weight = 15;
+  this.getWeight = function(){
+    return weight;
+  }
+}
+
+
+了解立即调用函数表达（IIFE）
+JavaScript 中的一个常见模式就是，函数在声明后立刻执行：
+(function () {
+  console.log("Chirp, chirp!");
+})();
+这是一个匿名函数表达式，立即执行并输出 Chirp, chirp!。
+请注意，函数没有名称，也不存储在变量中。 函数表达式末尾的两个括号（）会让它被立即执行或调用。 
+这种模式被叫做立即调用函数表达式（immediately invoked function expression) 或者IIFE。
+重写函数 makeNest，并删除它的调用，取而代之是一个匿名的立即调用函数表达式（IIFE）。
+(function () {
+  console.log("A cozy nest is ready");
+})();
+
+
+使用 IIFE 创建一个模块
+创建一个名为 funModule 的模块，将这两个 mixins：isCuteMixin 和 singMixin 包装起来。 funModule 应该返回一个对象。
+let funModule = (function () {
+  return {
+    isCuteMixin: function(obj) {
+      obj.isCute = function() {
+        return true;
+      };
+    },
+    singMixin: function(obj) {
+      obj.sing = function() {
+        console.log("Singing to an awesome tune");
+      };
+    }
+  }
+})();
+
