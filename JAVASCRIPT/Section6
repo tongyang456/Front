@@ -1,3 +1,45 @@
+将摄氏度转换为华氏度
+从摄氏转换为华氏的公式是，摄氏温度乘以 9/5，再加上 32。
+输入参数 celsius 代表一个摄氏度的温度。 使用已定义的变量 fahrenheit，并赋值为相应的华氏度的温度值。 使用上面提到的公式来帮助将摄氏温度转换为华氏温度。
+function convertCtoF(celsius) {
+  let fahrenheit = celsius * (9/5) + 32;
+  return fahrenheit;
+}
+
+convertCtoF(30);
+
+
+反转字符串
+反转提供的字符串并返回反转后的字符串。
+例如， "hello" 应该变成 "olleh"。
+function reverseString(str) {
+  // 将字符串拆分为字符数组
+  var arr = str.split("");
+  // 反转数组的顺序
+  var reversedArr = arr.reverse();
+  // 将数组元素连接为一个新的字符串
+  var reversedStr = reversedArr.join("");
+  // 返回反转后的字符串
+  return reversedStr;
+}
+
+reverseString("hello");
+
+
+计算整数的阶乘
+function factorialize(num) {
+  if(num == 0 ){
+    return 1;
+  }else{
+    return num*factorialize(num-1);
+  }
+}
+factorialize(5);
+
+
+
+
+
 如果传入的字符串（第一个参数）的长度大于传入的值（第二个参数），请在这个位置截断它， 并在后面加上 ...，然后返回结果。
 function truncateString(str, num) { 
   if (str.length > num) {
