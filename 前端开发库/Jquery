@@ -317,4 +317,383 @@ jQuery 还有一个类似的函数 .text()，可以在不添加标签的前提�
 给 id 为 target4 的按钮的文本添加强调效果。
 查看我们的专栏文章 <em>来了解 <i> 和 <em> 及其用途之间的差异。
 注意，<i> 标签虽然传统上用来强调文本，但此后常用作图标的标签。 <em> 标签作为强调标签现在已被广泛接受。 可以使用任意一种完成这个挑战。
+<script>
+  $(document).ready(function() {
+    $("#target1").css("color", "red");
+    $("#target4").html("<em>#target4</em>")
+  });
+</script>
+
+<!-- 只更改这条注释以上的代码。 -->
+
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+使用 jQuery 删除元素
+现在学习用 jQuery 从页面移除 HTML 标签。
+jQuery 有一个名为 .remove() 的函数，它将完全删除一个 HTML 元素。
+用 .remove() 方法从页面移除 #target4 元素。
+<script>
+  $(document).ready(function() {
+    $("#target1").css("color", "red");
+    $("#target1").prop("disabled", true);
+    $("#target4").remove();
+  });
+</script>
+
+<!-- 只修改这一行上面的代码 -->
+
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+使用 jQuery 的 appendTo 方法移动元素
+现在来把标签从一个 div 移动到另一个里。
+jQuery 有一个 appendTo() 方法，可以选取 HTML 标签并将其添加到另一个标签里面。
+例如，如果要把 target4 从 right well 移到 left well，可以设置如下：
+$("#target4").appendTo("#left-well");
+把 target2 元素从 left-well 移动到 right-well。
+<script>
+  $(document).ready(function() {
+    $("#target1").css("color", "red");
+    $("#target1").prop("disabled", true);
+    $("#target4").remove();
+    $("#target2").appendTo("#right-well");
+  });
+</script>
+
+<!-- 只修改这一行上面的代码 -->
+
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+使用 jQuery 克隆元素
+除了移动标签，也可以把元素从一个地方复制到另一地方。
+jQuery 有一个 clone() 方法，可以复制标签。
+例如，如果想把 target2 从 left-well 复制到 right-well，可以设置如下：
+$("#target2").clone().appendTo("#right-well");
+是否注意到这两个 jQuery 函数连在一起了？ 这被称为链式调用（function chaining），是一种用 jQuery 实现效果的简便方法。
+克隆 target5 元素，并将其附加到 left-well 。
+<script>
+  $(document).ready(function() {
+    $("#target1").css("color", "red");
+    $("#target1").prop("disabled", true);
+    $("#target4").remove();
+    $("#target2").appendTo("#right-well");
+    $("#target5").clone().appendTo("#left-well");
+
+  });
+</script>
+
+<!-- 只修改这一行上面的代码 -->
+
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+使用 jQuery 选择元素的父元素
+每个 HTML 标签都默认 inherits（继承）其 parent（父标签）的 CSS 属性。
+例如，你的 jQuery Playground 中的 h3 标签的父标签是 <div class="container-fluid">，而这个标签的父标签是 body。
+jQuery 有一个 parent() 方法，可以访问被选取标签的父标签。
+下面的代码展示了使用 parent() 方法把 left-well 标签的父标签背景色设置成蓝色（blue）：
+$("#left-well").parent().css("background-color", "blue")
+把 #target1 元素的父元素背景色设置成红色（red）。
+<script>
+  $(document).ready(function() {
+    $("#target1").css("color", "red");
+    $("#target1").prop("disabled", true);
+    $("#target4").remove();
+    $("#target2").appendTo("#right-well");
+    $("#target5").clone().appendTo("#left-well");
+    $("#target1").parent().css("background-color", "red")
+
+  });
+</script>
+
+<!-- 只修改这一行上面的代码 -->
+
+<body>
+  <div class="container-fluid">
+    <h3 class="text-primary text-center">jQuery Playground</h3>
+    <div class="row">
+      <div class="col-xs-6">
+        <h4>#left-well</h4>
+        <div class="well" id="left-well">
+          <button class="btn btn-default target" id="target1">#target1</button>
+          <button class="btn btn-default target" id="target2">#target2</button>
+          <button class="btn btn-default target" id="target3">#target3</button>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <h4>#right-well</h4>
+        <div class="well" id="right-well">
+          <button class="btn btn-default target" id="target4">#target4</button>
+          <button class="btn btn-default target" id="target5">#target5</button>
+          <button class="btn btn-default target" id="target6">#target6</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+使用 jQuery 选择元素的子元素
+把 HTML 标签放到另一个级别的标签里，这些 HTML 标签被称为该标签的子标签（children element）。 
+例如，本次挑战中文本为 #target1、#target2 和 #target3 的按钮都是 <div class="well" id="left-well"> 标签的子标签。
+jQuery 有一个 children() 方法，可以访问被选取标签的子标签。
+下面的代码展示了用 children() 方法把 left-well 标签的子标签的颜色设置成 blue（蓝色）：
+$("#left-well").children().css("color", "blue")
+将 right-well 元素的所有子元素设置为橙色（orange）。
+<script>
+  $(document).ready(function() {
+    $("#target1").css("color", "red");
+    $("#target1").prop("disabled", true);
+    $("#target4").remove();
+    $("#target2").appendTo("#right-well");
+    $("#target5").clone().appendTo("#left-well");
+    $("#target1").parent().css("background-color", "red");
+    $("#right-well").children().css("color", "orange")
+  });
+</script>
+
+<!-- 只修改这一行上面的代码 -->
+
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+使用 jQuery 选择元素的特定子元素
+已经看到了 id 属性对于 jQuery 选择器选取标签的便利， 但这并不适用于所有情景。
+幸运的是，jQuery 有一些其他的方法可以选取正确的标签。
+jQuery 可以用 CSS 选择器（CSS Selectors）选取标签。 target:nth-child(n) CSS 选择器可以选取指定 class 或者元素类型的的第 n 个标签。
+下面的代码展示了给每个区域（well）的第 3 个标签设置弹跳（bounce）动画效果：
+$(".target:nth-child(3)").addClass("animated bounce");
+给 well 元素的第二个子元素添加弹跳（bounce）动画效果。 你必须选择具有 target class 的元素子项。
+<script>
+  $(document).ready(function() {
+    $("#target1").css("color", "red");
+    $("#target1").prop("disabled", true);
+    $("#target4").remove();
+    $("#target2").appendTo("#right-well");
+    $("#target5").clone().appendTo("#left-well");
+    $("#target1").parent().css("background-color", "red");
+    $("#right-well").children().css("color", "orange");
+    $(".target:nth-child(2)").addClass("animated bounce");
+  });
+</script>
+
+<!-- 只修改这一行上面的代码 -->
+
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+使用 jQuery 选择偶数元素
+也可以用基于位置的奇 :odd 和偶 :even 选择器选取标签。
+注意，jQuery 是零索引（zero-indexed）的，这意味着第 1 个标签的位置编号是 0。 这有点混乱和反常——:odd 表示选择第 2 个标签（位置编号 1）、第 4 个标签（位置编号 3）……等等，以此类推。
+下面的代码展示了选取所有 target class 的奇数元素并给它们设置 class：
+$(".target:odd").addClass("animated shake");
+尝试选取所有 target class 元素的偶数元素并给它们设置 animated 和 shake class。 请记住， 偶数指的是基于零系统的元素的位置。
+<script>
+  $(document).ready(function() {
+    $("#target1").css("color", "red");
+    $("#target1").prop("disabled", true);
+    $("#target4").remove();
+    $("#target2").appendTo("#right-well");
+    $("#target5").clone().appendTo("#left-well");
+    $("#target1").parent().css("background-color", "red");
+    $("#right-well").children().css("color", "orange");
+    $("#left-well").children().css("color", "green");
+    $(".target:nth-child(2)").addClass("animated bounce");
+    $(".target:even").addClass("animated shake");
+  });
+</script>
+
+<!-- 只修改这一行上面的代码 -->
+
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+使用 jQuery 修改整个页面
+目前，已经完成了 jQuery playground。 把它移除吧。
+jQuery 也能选取 body 标签。
+这是使整个 body 淡出的代码：$("body").addClass("animated fadeOut");
+来做一些更好玩的事。 给 body 标签添加 animated 和 hinge class。
+<script>
+  $(document).ready(function() {
+    $("#target1").css("color", "red");
+    $("#target1").prop("disabled", true);
+    $("#target4").remove();
+    $("#target2").appendTo("#right-well");
+    $("#target5").clone().appendTo("#left-well");
+    $("#target1").parent().css("background-color", "red");
+    $("#right-well").children().css("color", "orange");
+    $("#left-well").children().css("color", "green");
+    $(".target:nth-child(2)").addClass("animated bounce");
+    $(".target:even").addClass("animated shake");
+    $("body").addClass("animated hinge");
+  });
+</script>
+
+<!-- 只修改这一行上面的代码 -->
+
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
