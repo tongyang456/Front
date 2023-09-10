@@ -1,0 +1,245 @@
+回文检查器
+如果传入的字符串是回文字符串，则返回 true。 否则返回 false
+回文 palindrome，指在忽略标点符号、大小写和空格的前提下，正着读和反着读一模一样。
+注意：检查回文时，你需要先去除所有非字母数字的字符（标点、空格和符号），并将所有字母都转换成大写或都转换成小写。
+我们会传入具有不同格式的字符串，如 racecar、RaceCar 和 race CAR 等等。
+我们也会传入一些包含特殊符号的字符串，例如 2A3*3a2、2A3 3a2、2_A3*3#A2。
+
+function palindrome(str) {
+  // 去除非字母数字的字符
+  str = str.replace(/[^a-zA-Z0-9]/g, "");
+  
+  // 转换为小写形式
+  str = str.toLowerCase();
+
+  // 反转字符串
+  var reversedStr = str.split("").reverse().join("");
+  
+  // 比较原始字符串和反转后的字符串
+  return str === reversedStr;
+}
+
+palindrome("eye");
+
+
+把传入的数字转为罗马数字。
+罗马数字	阿拉伯数字
+M	1000
+CM	900
+D	500
+CD	400
+C	100
+XC	90
+L	50
+XL	40
+X	10
+IX	9
+V	5
+IV	4
+I	1
+所有罗马数字答案都应该大写。
+function convertToRoman(num) {
+  // 创建一个对象来映射罗马数字和对应的阿拉伯数字
+  const romanMap = {
+    M: 1000,
+    CM: 900,
+    D: 500,
+    CD: 400,
+    C: 100,
+    XC: 90,
+    L: 50,
+    XL: 40,
+    X: 10,
+    IX: 9,
+    V: 5,
+    IV: 4,
+    I: 1
+  };
+  let result = '';
+  // 使用循环遍历对象中的键值对，构建罗马数字
+  for (let roman in romanMap) {
+    while (num >= romanMap[roman]) {
+      result += roman;
+      num -= romanMap[roman];
+    }
+  }
+  return result;
+}
+convertToRoman(36);
+
+
+恺撒密码
+恺撒密码（ Caesar cipher）是最简单且最广为人知的密码（ciphers），也被称为移位密码（shift cipher）。 在移位密码中，明文中的字母通过按照一个固定数目进行偏移后被替换成新的字母。
+现代最常被应用到的一个变种就是 ROT13 加密，也就是明文中的字母向后移 13 位。 也就是， A ↔ N，B ↔ O 等等。
+编写一个函数，它将把使用 ROT13 加密编码的字符串作为输入并返回解码字符串。
+所有解码后的字母都必须为字母大写。 请不要解码非字母的字符（例如，空格、标点符号），但你需要在结果中保留它们。
+function rot13(str) {
+   // 创建一个数组，用于存储解码后的字符
+   let decodedArr = [];
+
+   // 遍历输入字符串中的每个字符
+   for (let i = 0; i < str.length; i++) {
+      // 获取当前字符的 unicode 码
+      let charCode = str.charCodeAt(i);
+
+      // 判断当前字符是否为字母
+      if (/[A-Z]/.test(str[i])) {
+         // 对字母进行 ROT13 解码
+         // 先将字母转换为从 A 开始的索引
+         let index = charCode - 65;
+         // 对索引进行 ROT13 解码
+         index = (index + 13) % 26;
+         // 将解码后的索引转换回字母
+         charCode = index + 65;
+      }
+
+      // 将解码后的字符添加到数组中
+      decodedArr.push(String.fromCharCode(charCode));
+   }
+
+   // 将解码后的字符数组转换为字符串并返回
+   return decodedArr.join('');
+}
+rot13("SERR PBQR PNZC");
+
+
+电话号码检查器
+如果传入的字符串是一个有效的美国电话号码格式，则返回 true。
+只要是有效的美国电话号码的格式，用户可以按照他们的方式填写表单中的电话号码。 以下是一些正确的例子（其他格式变形请参考以下例子）：
+555-555-5555
+(555)555-5555
+(555) 555-5555
+555 555 5555
+5555555555
+1 555 555 5555
+在这个挑战中，参数可能是 800-692-7753 或者 8oo-six427676;laskdjf 的号码。 你的任务是根据上面不同的格式组合，判断它是否为有效的电话号码。 其中，地区码（电话号码中的前三位）是必须的。 如果提供国家代码，则国家代码只能为 1。 如果传入的参数是有效的美国电话号码就返回 true，否则返回 false。
+telephoneCheck("555-555-5555") 应返回一个布尔值。
+telephoneCheck("1 555-555-5555") 应返回 true。
+telephoneCheck("1 (555) 555-5555") 应返回 true。
+telephoneCheck("5555555555") 应返回 true。
+telephoneCheck("555-555-5555") 应返回 true。
+telephoneCheck("(555)555-5555") 应返回 true。
+telephoneCheck("1(555)555-5555") 应返回 true。
+telephoneCheck("555-5555") 应返回 false。
+telephoneCheck("5555555") 应返回 false。
+telephoneCheck("1 555)555-5555") 应返回 false。
+telephoneCheck("1 555 555 5555") 应返回 true。
+telephoneCheck("1 456 789 4444") 应返回 true。
+telephoneCheck("123**&!!asdf#") 应返回 false。
+telephoneCheck("55555555") 应返回 false。
+telephoneCheck("(6054756961)") 应返回 false。
+telephoneCheck("2 (757) 622-7382") 应返回 false。
+telephoneCheck("0 (757) 622-7382") 应返回 false。
+telephoneCheck("-1 (757) 622-7382") 应返回 false。
+telephoneCheck("2 757 622-7382") 应返回 false。
+telephoneCheck("10 (757) 622-7382") 应返回 false。
+telephoneCheck("27576227382") 应返回 false。
+telephoneCheck("(275)76227382") 应返回 false。
+telephoneCheck("2(757)6227382") 应返回 false。
+telephoneCheck("2(757)622-7382") 应返回 false。
+telephoneCheck("555)-555-5555") 应返回 false。
+telephoneCheck("(555-555-5555") 应返回 false。
+telephoneCheck("(555)5(55?)-5555") 应返回 false。
+telephoneCheck("55 55-55-555-5") 应返回 false。
+telephoneCheck("11 555-555-5555") 应该返回 false。
+
+function telephoneCheck(str) {
+  let reg = /^1\s?\(\d{3}\).?\d{3}.?\d{4}|^1\s\d{3}[\(|-]\d{3}[-]\d{4}|^\d{10}$|\d{3}\s\d{3}\s\d{4}|^\(\d{3}\)\d{3}-\d{4}|^\d{3}-\d{3}-\d{4}$/
+  const bol = reg.test(str);
+  return bol;
+}
+
+telephoneCheck("555-555-5555");
+
+
+计算找零
+请编写一个用于收银机的函数 checkCashRegister()：它的第一个参数为售价 price、第二个参数为支付金额 cash、第三个参数为收银机內的金额 cid。
+cid 是包含货币面值的二维数组。
+函数 checkCashRegister() 应返回含有 status 属性和 change 属性的对象。
+如果收银机內的金额少于应找回的零钱数，或者你无法返回确切的数目时，返回 {status: "INSUFFICIENT_FUNDS", change: []}。
+如果收银机內的金额恰好等于应找回的零钱数，返回 {status: "CLOSED", change: [...]}，其中 change 的属性值就是收银机內的金额。
+否则，返回 {status: "OPEN", change: [...]}，其中 change 键值是应找回的零钱数，并将找零的面值由高到低排序。
+
+货币单位 Unit	面值
+Penny	0.01 美元（PENNY）
+Nickel	0.05 美元（NICKEL）
+Dime	0.1 美元（DIME）
+Quarter	0.25 美元（QUARTER）
+Dollar	1 美元（ONE）
+Five Dollars	5 美元（五）
+Ten Dollars	10 美元（TEN）
+Twenty Dollars	20 美元（TWENTY）
+One-hundred Dollars	100美元（ONE HUNDRED）
+
+下面的抽屉里现金数组示例：
+[
+  ["PENNY", 1.01],
+  ["NICKEL", 2.05],
+  ["DIME", 3.1],
+  ["QUARTER", 4.25],
+  ["ONE", 90],
+  ["FIVE", 55],
+  ["TEN", 20],
+  ["TWENTY", 60],
+  ["ONE HUNDRED", 100]
+]
+
+function checkCashRegister(price, cash, cid) {
+  const currencyUnit = {
+    "PENNY": 0.01,
+    "NICKEL": 0.05,
+    "DIME": 0.1,
+    "QUARTER": 0.25,
+    "ONE": 1,
+    "FIVE": 5,
+    "TEN": 10,
+    "TWENTY": 20,
+    "ONE HUNDRED": 100,
+  };
+
+  let changeNeeded = cash - price;
+  let changeAvailable = 0;
+
+  // 计算收银机内的总金额
+  for (let i = 0; i < cid.length; i++) {
+    changeAvailable += cid[i][1];
+  }
+
+  // 如果收银机内的金额等于找零金额，则返回状态为 "CLOSED"
+  if (changeNeeded === changeAvailable) {
+    return { status: "CLOSED", change: cid };
+  }
+
+  let change = [];
+  let currentCurrency;
+
+  // 从最高面值的货币开始找零
+  for (let i = cid.length - 1; i >= 0; i--) {
+    currentCurrency = cid[i][0];
+    let unitValue = currencyUnit[currentCurrency];
+
+    if (changeNeeded >= unitValue) {
+      let currencyCount = Math.floor(cid[i][1] / unitValue);
+      let currencyValue = 0;
+
+      while (currencyCount > 0 && changeNeeded >= unitValue) {
+        changeNeeded -= unitValue;
+        changeNeeded = Math.round(changeNeeded * 100) / 100;
+        cid[i][1] -= unitValue;
+        currencyValue += unitValue;
+        currencyCount--;
+      }
+
+      change.push([currentCurrency, currencyValue]);
+    }
+  }
+
+  // 如果还有剩余的找零金额，则返回状态为 "INSUFFICIENT_FUNDS"
+  if (changeNeeded > 0) {
+    return { status: "INSUFFICIENT_FUNDS", change: [] };
+  }
+
+  // 返回找零金额和所找零的货币单位
+  return { status: "OPEN", change };
+}
+checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
