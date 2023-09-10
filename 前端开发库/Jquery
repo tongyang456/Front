@@ -1,0 +1,320 @@
+了解 script 和 document.ready 是如何工作的
+马上就要学习有史以来最受欢迎的 JavaScript 框架——jQuery 了。
+在使用 jQuery 之前，需要在 HTML 页面中添加一些东西。
+首先，在页面顶部添加 script 标签， 记得在后面为它添加结束标签。
+浏览器会运行 script 标签所有的 JavaScript 脚本包括 jQuery。
+在 script 标签中添加代码 $(document).ready(function() {。 然后在后面（仍在该 script 标签内）用 }); 闭合它。
+稍后将详细介绍 functions， 重要的是要知道，在浏览器加载页面后，你放入此 function 的代码将立即运行。
+有一点很重要，如果没有 document ready function，代码将在 HTML 页面呈现之前运行，这可能会导致错误。
+<script>$(document).ready(function(){}); </script>
+<!-- 只修改这一行上面的代码 -->
+
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+使用 jQuery 选择器选择元素
+现在我们有一个 document ready 函数。
+首先，完成第一个 jQuery 语句。 所有的 jQuery 函数都以 $ 开头，这个符号通常被称为美元符号（dollar sign operator）或 bling。
+jQuery 通常选取并操作带有选择器（selector）的 HTML 标签。
+比如，想要给 button 元素添加跳跃效果。 只需要在 document ready 函数内添加如下代码：
+$("button").addClass("animated bounce");
+请注意，我们已经在后台引入了 jQuery 库和 Animate.css 库，所以你可以在编辑器里直接使用它们。 你将使用 jQuery 将 Animate.css bounce class 应用于 button 元素。
+<script>
+  $(document).ready(function() {
+    $("button").addClass("animated bounce");
+  });
+</script>
+<!-- 只修改这一行上面的代码 -->
+
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+使用 jQuery class 选择器选择元素
+如何使所有的 button 标签都有弹跳的动画效果？ 用 $("button") 选取所有的 button 标签，并用 .addClass("animated bounce"); 给其添加一些 CSS 属性。
+jQuery 的 .addClass() 方法用来给标签添加类。
+首先，使用 $(".well") 选取类为 well 的 div 标签。
+值得注意的是，和 CSS 声明一样，在类名前需要添加 .。
+然后，用 jQuery 的 .addClass() 方法添加 animated 和 shake class。
+例如，在 document ready function 中添加下面的代码，使所有类为 text-primary 的标签抖动：
+$(".text-primary").addClass("animated shake");
+
+<script>
+  $(document).ready(function() {
+    $("button").addClass("animated bounce");
+    $(".well").addClass("animated shake");
+  });
+</script>
+
+<!-- 只修改这一行上面的代码 -->
+
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+使用 jQuery id 选择器选择元素
+也能通过 id 属性选取标签。
+首先，用 $("#target3") 选择器选取 id 为 target3 的 button 标签。
+注意，和 CSS 声明一样，在 id 名前需要添加 #。
+然后，用 jQuery 的 .addClass() 方法添加 animated 和 fadeOut 类。
+下面的代码的效果是使 id 为 target6 的 button 标签淡出：
+$("#target6").addClass("animated fadeOut");
+
+<script>
+  $(document).ready(function() {
+    $("button").addClass("animated bounce");
+    $(".well").addClass("animated shake");
+    $("#target3").addClass("animated fadeOut");
+  });
+</script>
+
+<!-- 只修改这一行上面的代码 -->
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+用多个 jQuery 选择器选择同一个元素
+现在你知道了三种选取标签的方法：用元素选择器：$("button")、用类选择器：$(".btn") 以及用 id 选择器：$("#target1") 。
+虽然可以在单个 .addClass() 内添加多个类，但是我们可以用三种不同的方式给一种标签添加类。
+以三种不同的方式用 .addClass() 方法每次只给一种标签添加一个类：
+给所有的 button 标签添加 animated 类。
+给所有类为 .btn 的 button 标签添加 shake 类。
+给所有 id 为 #target1 的 button 标签添加 btn-primary 类。
+**注意：**只针对一个元素并且一次只能添加一个 class。 总之，三个选择器最终将给 #target1 添加三个 class shake、animated 以及 btn-primary。
+<script>
+  $(document).ready(function() {
+    $("button").addClass("animated");
+    $(".btn").addClass("shake");
+    $("#target1").addClass("btn-primary");
+  });
+</script>
+
+<!-- 只修改这一行上面的代码 -->
+
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+使用 jQuery 从元素中移除 class
+和用 jQuery 的 addClass() 方法给标签添加类一样，也可以利用 jQuery 的 removeClass() 方法移除它们。
+下面是为指定按钮执行上面的操作的代码：
+$("#target2").removeClass("btn-default");
+请把所有 button 元素的 btn-default class 移除。
+<script>
+  $(document).ready(function() {
+    $("button").addClass("animated bounce");
+    $(".well").addClass("animated shake");
+    $("#target3").addClass("animated fadeOut");
+    $("button").removeClass("btn-default");
+  });
+</script>
+
+<!-- 只修改这一行上面的代码 -->
+
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+使用 jQuery 更改元素的 CSS
+也能用 jQuery 直接改变 HTML 标签的 CSS。
+jQuery 有一个 .css() 方法，能改变标签的 CSS。
+下面的代码效果是把颜色变蓝：
+$("#target1").css("color", "blue");
+这与通常的 CSS 声明略有不同，因为这个 CSS 属性和它的值在英文引号里，并且它们用逗号而不是冒号间隔开。
+删除 jQuery 选择器，留下一个空的 document ready function 。
+选择 target1，并将其颜色更改为红色。
+<script>
+  $(document).ready(function() {
+    $("#target1").css("color", "red");
+  });
+</script>
+
+<!-- 只修改这一行上面的代码 -->
+
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+使用 jQuery 禁用元素
+还能用 jQuery 改变 HTML 标签的非 CSS 属性， 例如：禁用按钮。
+当禁用按钮时，它将变成灰色并无法点击。
+jQuery 有一个 .prop() 方法，可以用其调整标签的属性。
+下面是禁用所有的按钮的代码：
+$("button").prop("disabled", true);
+仅禁用 target1 按钮。
+<script>
+  $(document).ready(function() {
+    $("#target1").css("color", "red");
+    $("#target1").prop("disabled", true);
+  });
+</script>
+
+<!-- 只修改这一行上面的代码 -->
+
+<div class="container-fluid">
+  <h3 class="text-primary text-center">jQuery Playground</h3>
+  <div class="row">
+    <div class="col-xs-6">
+      <h4>#left-well</h4>
+      <div class="well" id="left-well">
+        <button class="btn btn-default target" id="target1">#target1</button>
+        <button class="btn btn-default target" id="target2">#target2</button>
+        <button class="btn btn-default target" id="target3">#target3</button>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h4>#right-well</h4>
+      <div class="well" id="right-well">
+        <button class="btn btn-default target" id="target4">#target4</button>
+        <button class="btn btn-default target" id="target5">#target5</button>
+        <button class="btn btn-default target" id="target6">#target6</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+使用 jQuery 更改元素内部的文本
+可以通过 jQuery 改变元素开始和结束标签之间的文本。 甚至改变 HTML 标签。
+jQuery 有一个 .html() 函数，能用其在标签里添加 HTML 标签和文本， 函数提供的内容将完全替换之前标签的内容。
+下面是重写并强调标题文本的代码：
+$("h3").html("<em>jQuery Playground</em>");
+jQuery 还有一个类似的函数 .text()，可以在不添加标签的前提下改变标签内的文本。 换句话说，这个函数不会评估传递给它的任何 HTML 标记，而是将其视为要替换现有内容的文本。
+给 id 为 target4 的按钮的文本添加强调效果。
+查看我们的专栏文章 <em>来了解 <i> 和 <em> 及其用途之间的差异。
+注意，<i> 标签虽然传统上用来强调文本，但此后常用作图标的标签。 <em> 标签作为强调标签现在已被广泛接受。 可以使用任意一种完成这个挑战。
+
