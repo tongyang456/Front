@@ -793,3 +793,949 @@ class MyComponent extends React.Component {
     }
   }
 }
+
+
+写一个简单的计数器
+可以结合目前为止所涵盖的概念来设计更复杂的有状态组件。 这包括初始化 state，编写设置 state 的方法，以及指定单击处理程序来触发这些方法。
+Counter 组件跟踪 state 中的 count 值。 有两个按钮分别调用 increment() 和 decrement() 方法。 
+编写这些方法，使计数器值在单击相应按钮时增加或减少 1。 另外，创建一个 reset() 方法，当单击 reset 按钮时，把计数设置为 0。
+注意： 确保没有修改按钮的 className。 另外，请记住在构造函数中为新创建的方法添加必要的绑定。
+class Counter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0
+    };
+    // 将方法绑定到组件实例
+    this.increment = this.increment.bind(this);
+    this.decrement = this.decrement.bind(this);
+    this.reset = this.reset.bind(this);
+  }
+  
+  // 增加count值的方法
+  increment() {
+    this.setState(prevState => ({
+      count: prevState.count + 1
+    }));
+  }
+  
+  // 减少count值的方法
+  decrement() {
+    this.setState(prevState => ({
+      count: prevState.count - 1
+    }));
+  }
+  
+  // 将count重置为0的方法
+  reset() {
+    this.setState({
+      count: 0
+    });
+  }
+  
+  render() {
+    return (
+      <div>
+      <button className='inc' onClick={this.increment}>Increment!</button>
+      <button className='dec' onClick={this.decrement}>Decrement!</button>
+      <button className='reset' onClick={this.reset}>Reset</button>
+      <h1>Current Count: {this.state.count}</h1>
+      </div>
+    );
+  }
+}
+
+
+创建一个可以控制的输入框
+应用程序可能在 state 和渲染的 UI 之间有更复杂的交互。 
+例如，用于文本输入的表单控件元素（如 input 和 textarea）在用户键入时在 DOM 中维护自己的 state。 
+通过 React，可以将这种可变 state 转移到 React 组件的 state 中。 
+用户的输入变成了应用程序 state 的一部分，因此 React 控制该输入字段的值。 
+通常，如果 React 组件具有用户可以键入的输入字段，那么它将是一个受控的输入表单。
+代码编辑器具有一个名为 ControlledInput 的组件框架，用于创建受控的 input 元素。 
+组件的 state 已经被包含空字符串的 input 属性初始化。 此值表示用户在 input 字段中键入的文本。
+首先，创建一个名为 handleChange() 的方法，该方法具有一个名为 event 的参数。 
+方法被调用时，它接收一个 event 对象，该对象包含一个来自 input 元素的字符串文本。 
+可以使用方法内的 event.target.value 来访问这个字符串。 用这个新字符串更新组件的state的input属性。
+在 render 方法中的 h4 标签之上创建 input 元素。 添加一个 value 属性，使其等于组件 state 的 input 属性。 
+然后将 onChange() 事件处理程序设置到 handleChange() 方法中。
+在输入框中键入时，文本由 handleChange() 方法处理，文本被设置为本地 state 中的 input 属性，并渲染在页面上的 input 框中。 
+组件 state 是输入数据的唯一真实来源。
+最后，不要忘记在构造函数中添加必要的绑定。
+class ControlledInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange(event) {
+    this.setState({
+      input: event.target.value
+    });
+  }
+  
+  render() {
+    return (
+      <div>
+        <input 
+          type="text"
+          value={this.state.input}
+          onChange={this.handleChange}
+        />
+        <h4>Controlled Input:</h4>
+        <p>{this.state.input}</p>
+      </div>
+    );
+  }
+}
+
+
+创建一个可以控制的表单
+上一个挑战展示了 React 能控制某些元素的内部 state，比如 input 和 textarea，这使得这些元素成为受控组件。 
+这也适用于其他表单元素，包括常规的 HTML 表单 form 元素。
+MyForm 组件中是一个带有提交处理程序的空 form 元素， 提交处理程序将在提交表单时被调用。
+我们增加了一个提交表单的按钮。 可以看到它的 type 被设置为 submit，表明它是控制表单提交的按钮。 
+在 form 中添加 input 元素，并像上个挑战一样设置其 value 和 onChange() 属性。 
+然后，应该完成 handleSubmit 方法，以便将组件 state 属性 submit 设置为本地 state 下的当前输入值。
+注意： 还必须在提交处理程序中调用 event.preventDefault()，以防止将会刷新网页的默认的表单提交行为。 
+为了便于学员操作，默认行为在这里被禁用，以防止重置挑战的代码。
+最后，在 form 元素之后创建一个 h1 标签，该标签从组件的 state 渲染 submit 的值。 
+然后，可以在表单中键入任何内容，然后单击按钮（或按 enter 键），输入会渲染到页面上。
+class MyForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: '',
+      submit: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleChange(event) {
+    this.setState({
+      input: event.target.value
+    });
+  }
+  handleSubmit(event) {
+    event.preventDefault();
+    this.setState({
+      submit: this.state.input
+    });
+  }
+  render() {
+    return (
+    <div>
+    <form onSubmit={this.handleSubmit}>
+    <input value={this.state.input} onChange={this.handleChange} />
+    <button type='submit'>Submit!</button>
+    </form>
+    <h1>{this.state.submit}</h1>
+    </div>
+    );
+  }
+}
+
+
+将 State 作为 Props 传递给子组件
+在之前的挑战中，看到了很多将 props 传递给子 JSX 元素和子 React 组件的例子。 
+你可能想知道那些 props 是从哪里来的。 一个常见的模式是：有状态组件中包含对应用程序很重要的 state，然后用它渲染子组件。 
+如果想让这些组件能够访问该 state 的某些部分，就把这些部分作为 props 传入。
+例如，有一个 App 组件可以渲染 Navbar 以及其他组件。 
+App 里的 state 包含大量用户信息，但 Navbar 只需要访问用户的用户名，以便显示它。 将该 state 作为 prop 传递给Navbar组件。
+这个模式说明了 React 中的一些重要范例。 
+第一个是单向数据流， state 沿着应用程序组件树的一个方向流动，从有状态父组件到子组件， 子组件只接收它们需要的 state 数据。 
+第二，复杂的有状态应用程序可以分解成几个，或者可能是一个单一的有状态组件。 
+其余组件只是从父组件简单的接收 state 作为 props，并从该 state 渲染 UI。 
+它开始创建一种分离，在这种分离中，state 管理在代码的一部分中处理，而 UI 渲染在另一部分中处理。 
+将 state 逻辑与 UI 逻辑分离是 React 的关键原则之一。 当它被正确使用时，它使得复杂的、有状态的应用程序的设计变得更容易管理。
+MyApp 组件是有状态的，并将 Navbar 组件渲染为子组件。 
+将 state 的 name 属性向下传递给子组件，然后在 h1 中显示该 name ，h1 是 Navbar render方法的一部分。 name 应该显示在文本 Hello, my name is: 后面。
+class MyApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: 'CamperBot'
+    }
+  }
+  render() {
+    return (
+       <div>
+         <Navbar name={this.state.name} />
+       </div>
+    );
+  }
+};
+
+class Navbar extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+    <div>
+      <h1>Hello, my name is: {this.props.name}</h1>
+    </div>
+    );
+  }
+};
+
+
+传递回调作为 Props
+可以将 state 作为 props 传递给子组件，但不仅限于传递数据。 你也可以将处理函数或在 React 组件中定义的任何方法传递给子组件。 
+这就是子组件与父组件交互的方式。 可以把方法像普通 prop 一样传递给子组件， 它会被分配一个名字，可以在子组件中的 this.props 下访问该方法的名字。
+代码编辑器中列出了三个组件。 MyApp 是父组件，GetInput 和RenderInput 是它将要渲染的子组件。 
+将 GetInput 组件添加到 MyApp 的 render 方法，然后将 MyApp 的 state 中的 inputValue 传入名为 input 的 prop。 
+还要创建一个名为 handleChange 的 prop，并将输入处理程序 handleChange 传递给它。
+接下来，将 RenderInput 添加到 MyApp 中的 render 方法中，然后创建一个名为 input 的 prop，并将 state 中的 inputValue 传递给它。 
+完成后，可以在 GetInput 组件中的 input 字段中键入内容，然后该组件通过 props 调用其父组件中的处理函数方法。 
+这将更新处于父组件 state 中的 input，该 input 将作为 props 传递给两个子组件。 观察数据如何在组件之间流动，以及单一数据源如何保持父组件state。 
+诚然，这个示例有点刻意，但是应该能用来说明数据和回调是如何在 React 组件之间传递的。
+class MyApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputValue: ''
+    }
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(event) {
+    this.setState({
+      inputValue: event.target.value
+    });
+  }
+  render() {
+    return (
+       <div>
+        <GetInput 
+          input={this.state.inputValue}
+          handleChange={this.handleChange}
+        />
+        <RenderInput 
+          input={this.state.inputValue}
+        />
+       </div>
+    );
+  }
+};
+
+class GetInput extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <div>
+        <h3>Get Input:</h3>
+        <input
+          value={this.props.input}
+          onChange={this.props.handleChange}/>
+      </div>
+    );
+  }
+};
+
+class RenderInput extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <div>
+        <h3>Input Render:</h3>
+        <p>{this.props.input}</p>
+      </div>
+    );
+  }
+};
+
+
+使用生命周期方法 componentWillMount
+React 组件有几种特殊方法，可以在组件生命周期的特定点执行操作。 这些称为生命周期方法或生命周期钩子，允许在特定时间点捕获组件。 
+这可以在渲染之前、更新之前、接收 props 之前、卸载之前等等。 
+以下是一些主要生命周期方法的列表： componentWillMount() componentDidMount() shouldComponentUpdate() componentDidUpdate() componentWillUnmount() 
+接下来的几节课将讲述这些生命周期方法的一些基本用例。
+注意： componentWillMount 生命周期方法会在版本 16.X 废弃，在版本 17 移除。 
+当组件被挂载到 DOM 时，componentWillMount() 方法在 render() 方法之前被调用。 
+在 componentWillMount() 中将一些内容记录到控制台 -- 可能需要打开浏览器控制台以查看输出。
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  componentWillMount() {
+    console.log('Component is about to mount');
+  }
+  render() {
+    return <div />
+  }
+};
+
+
+使用生命周期方法：componentDidMount
+某些时候，大多数 web 开发人员需要调用 API 接口来获取数据。 如果正在使用 React，知道在哪里执行这个动作是很重要的。
+React 的最佳实践是在生命周期方法 componentDidMount() 中对服务器进行 API 调用或任何其它调用。 
+将组件装载到 DOM 后会调用此方法。 此处对 setState() 的任何调用都将触发组件的重新渲染。 
+在此方法中调用 API 并用 API​​ 返回的数据设置 state 时，一旦收到数据，它将自动触发更新。
+componentDidMount() 中有一个模拟 API 调用。 它在 2.5 秒后设置 state，以模拟调用服务器检索数据。 
+本示例请求站点的当前活动用户总数。 在 render 方法中，把 activeUsers 渲染到文字 Active Users: 后的 h1 标签中。 观看预览中发生的事情，随意更改超时时间以查看不同的效果。
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeUsers: null
+    };
+  }
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        activeUsers: 1273
+      });
+    }, 2500);
+  }
+  render() {
+    return (
+      <div>
+        <h1>Active Users: {this.state.activeUsers}</h1>
+      </div>
+    );
+  }
+}
+
+
+添加事件侦听器
+componentDidMount() 方法也是添加特定功能所需的任何事件监听器的最佳位置。 
+React 提供了一个合成事件系统，它封装了浏览器中的事件系统。 
+这意味着，不管用户用的是什么浏览器，合成事件系统的行为都完全相同 -- 即使不同浏览器之间的本地事件的行为可能不同。
+之前已经接触了一些合成事件处理程序，如onClick()。 React 的合成事件系统非常适合用于在 DOM 元素上管理的大多数交互。 
+但是，如果要将事件处理程序附加到 document 或 window 对象，则必须直接执行此操作。
+在 componentDidMount() 方法中为 keydown 事件添加事件监听器，并让这些事件触发回调 handleKeyPress()。 
+可以使用 document.addEventListener()，它将事件（用引号括起来）作为第一个参数，将回调作为第二个参数。
+然后，在 componentWillUnmount() 中移除相同的事件监听器。 可以把相同的参数传递给 document.removeEventListener()。 
+在卸载和销毁 React 组件之前，最好在这个生命周期方法中对它们进行清理。 移除事件监听器就是这样一个清理操作的例子。
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      message: ''
+    };
+    this.handleEnter = this.handleEnter.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleKeyPress);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyPress);
+  }
+
+  handleEnter() {
+    this.setState((state) => ({
+      message: state.message + 'You pressed the enter key! '
+    }));
+  }
+
+  handleKeyPress(event) {
+    if (event.keyCode === 13) {
+      this.handleEnter();
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>{this.state.message}</h1>
+      </div>
+    );
+  }
+};
+
+
+使用 shouldComponentUpdate 优化重新渲染
+到目前为止，如果任何组件接收到新的 state 或新的 props，它会重新渲染自己及其所有子组件。 
+这通常是好的。 但是 React 提供了一种生命周期方法，当子组件接收到新的 state 或 props 时，可以调用该方法，并特别声明组件是否应该更新。 
+这个方法就是 shouldComponentUpdate()，它将 nextProps 和 nextState 作为参数。
+这种方法是优化性能的有效方法。 例如，默认行为是，当组件接收到新的 props 时，即使 props 没有改变，它也会重新渲染。 
+可以通过使用 shouldComponentUpdate() 比较 props 来防止这种情况发生。 该方法必须返回一个 boolean（布尔值），该值告诉 React 是否更新组件。 
+可以比较当前的 props（this.props）和下一个 props（nextProps），以确定你是否需要更新，并相应地返回 true 或 false。
+将 shouldComponentUpdate() 方法添加到名为 OnlyEvens 的组件中。 目前，该方法返回 true，因此每次收到新的 props 时，OnlyEvens 都会重新渲染。 
+修改该方法，以便 OnlyEvens 仅在其新 props 的 value 为偶数时更新。 单击 Add 按钮，在触发其他生命周期钩子时，在浏览器控制台中查看事件的顺序。
+class OnlyEvens extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('Should I update?');
+    return nextProps.value % 2 === 0;
+  }
+  componentDidUpdate() {
+    console.log('Component re-rendered.');
+  }
+  render() {
+    return <h1>{this.props.value}</h1>;
+  }
+}
+
+class Controller extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: 0
+    };
+    this.addValue = this.addValue.bind(this);
+  }
+  addValue() {
+    this.setState(state => ({
+      value: state.value + 1
+    }));
+  }
+  render() {
+    return (
+      <div>
+        <button onClick={this.addValue}>Add</button>
+        <OnlyEvens value={this.state.value} />
+      </div>
+    );
+  }
+}
+
+
+介绍内联样式
+还有其他复杂的概念可以为 React 代码增加强大的功能。 但是，你可能会想知道更简单的问题，比如：如何对在 React 中创建的 JSX 元素添加样式。 
+你可能知道，鉴于将 class 应用于 JSX 元素的方式，它与使用 HTML 并不完全相同。
+如果从样式表导入样式，它就没有太大的不同。 
+使用 className 属性将 class 应用于 JSX 元素，并将样式应用于样式表中的 class。 另一种选择是使用内联样式，这在 ReactJS 开发中非常常见。
+将内联样式应用于 JSX 元素，类似于在 HTML 中的操作方式，但有一些 JSX 差异。 以下是 HTML 中内联样式的示例：
+<div style="color: yellow; font-size: 16px">Mellow Yellow</div>
+JSX 元素使用 style 属性，但是鉴于 JSX 的编译方式，不能将值设置为 string（字符串）。 相反，你应该将其设置为等于 JavaScript object 。 如下所示：
+<div style={{color: "yellow", fontSize: 16}}>Mellow Yellow</div>
+注意到如何驼峰拼写 fontSize 属性了吗？ 这是因为 React 不接受样式对象中的 kebab-case 键。 React 将在 HTML 中为应用正确的属性名称。
+在代码编辑器中给 div 添加一个 style 属性，将文本颜色设置为红色，字体大小设置为 72px。
+Note that you can optionally set the font size to be a number, omitting the units px, or write it as "72px".
+class Colorful extends React.Component {
+  render() {
+    return (
+      <div style={{ color: 'red', fontSize: '72px' }}>Big Red</div>
+    );
+  }
+};
+
+
+在 React 中添加内联样式
+在上一次挑战中，你可能已经注意到，除了设置为 JavaScript 对象的 style 属性之外，与 HTML 内联样式相比，React 的内联样式还有其他几个语法差异。 
+首先，某些 CSS 样式属性的名称使用驼峰式命名。 例如，最后一个挑战用 fontSize 而不是 font-size 来设置字体的大小。 
+对于 JavaScript 对象属性来说，像 font-size 这样的连字符命名是无效的语法，所以 React 使用驼峰式命名。 
+通常，任何连字符的 style 属性在 JSX 中都是使用驼峰式命名的。
+除非另有规定，否则所有属性值长度单位（如 height、width 和 fontSize）都假定为 px。 
+例如，如果要使用 em，可以用引号将值和单位括起来，例如 {fontSize: "4em"}。 除了默认为 px 的长度值之外，所有其他属性值都应该用引号括起来。
+如果你有大量样式，你可以将样式 object（对象）分配给一个常量，以保持代码组织有序。 在文件顶部将你的样式声明为全局变量。 
+定义一个 styles 常量，并将其声明为具有三个样式属性及对应值的 object（对象）。 
+使 div 的文字颜色为 purple、字体大小为 40、边框为 2px solid purple。 然后设置 style 属性，使其等于 styles 常量。
+const styles = {
+  color: 'purple',
+  fontSize: 40,
+  border: '2px solid purple'
+};
+
+// 修改这行上面的代码
+class Colorful extends React.Component {
+  render() {
+    // 修改这行下面的代码
+    return (
+      <div style={styles}>
+        Style Me!
+      </div>
+    );
+    // 修改这行上面的代码
+  }
+};
+
+
+在 React Render 方法中使用 JavaScript
+在之前的挑战中，你学习了如何使用大括号 { } 将 JavaScript 代码插入到 JSX 代码中，
+用于访问 props、传递 props、访问 state、在代码中插入注释以及最近学习的定制组件样式等任务。 
+这些都是将 JavaScript 放在 JSX 中的常见用例，但是在 React 组件中使用 JavaScript 代码还有其他方式。
+在 render 方法中编写 JavaScript，可以把 JavaScript 直接放在 return 语句之前，而不必将其插入大括号中。 
+这是因为它还不在 JSX 代码中。 如果之后想在 return 语句中的 JSX 代码里面使用变量时，可以将变量名放在大括号中。
+在提供的代码中，render 方法中有一个包含 20 个短语的数组，用于表示 20 世纪 80 年代经典魔术八球玩具中的答案。 
+绑定 ask 方法到按钮的单击事件，每次单击该按钮时，将生成随机数并将其存储为 state 中的 randomIndex。 
+在第 52 行，删除字符串 change me! 并重新分配 answer 常量，以便每次组件更新时，代码随机访问 possibleAnswers 数组的不同值。 
+最后，在 p 标签内插入 answer 常量。
+const inputStyle = {
+  width: 235,
+  margin: 5
+};
+
+class MagicEightBall extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userInput: '',
+      randomIndex: ''
+    };
+    this.ask = this.ask.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  ask() {
+    if (this.state.userInput) {
+      this.setState({
+        randomIndex: Math.floor(Math.random() * 20),
+        userInput: ''
+      });
+    }
+  }
+  handleChange(event) {
+    this.setState({
+      userInput: event.target.value
+    });
+  }
+  render() {
+    const possibleAnswers = [
+      'It is certain',
+      'It is decidedly so',
+      'Without a doubt',
+      'Yes, definitely',
+      'You may rely on it',
+      'As I see it, yes',
+      'Outlook good',
+      'Yes',
+      'Signs point to yes',
+      'Reply hazy try again',
+      'Ask again later',
+      'Better not tell you now',
+      'Cannot predict now',
+      'Concentrate and ask again',
+      "Don't count on it",
+      'My reply is no',
+      'My sources say no',
+      'Most likely',
+      'Outlook not so good',
+      'Very doubtful'
+    ];
+    const answer = possibleAnswers[this.state.randomIndex];
+    return (
+      <div>
+        <input
+          type='text'
+          value={this.state.userInput}
+          onChange={this.handleChange}
+          style={inputStyle}
+        />
+        <br />
+        <button onClick={this.ask}>Ask the Magic Eight Ball!</button>
+        <br />
+        <h3>Answer:</h3>
+        <p>
+          {/* 修改这行下面的代码 */}
+          {answer}
+          {/* 修改这行上面的代码 */}
+        </p>
+      </div>
+    );
+  }
+}
+
+
+使用 If-Else 条件进行渲染
+使用 JavaScript 控制渲染视图的另一个应用是按条件渲染元素。 当条件为真时，将呈现一个视图， 反之，则呈现另一种视图。 
+可以在 React 组件的 render() 方法中使用的标准 if/else 语句来实现这一点。
+MyComponent 的 state 中包含一个 boolean（布尔值），用于跟踪是否要在 UI 中显示某个元素。 button 切换此值的状态。 
+目前，它每次都呈现相同的 UI。 用 if/else 语句重写 render() 方法，如果 display 为 true 则返回当前标记。 否则，返回不带 h1 元素的标记。
+注意： 写 if/else 语句才能通过测试， 使用三元运算符是不会通过的。
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      display: true
+    }
+    this.toggleDisplay = this.toggleDisplay.bind(this);
+  }
+  toggleDisplay() {
+    this.setState((state) => ({
+      display: !state.display
+    }));
+  }
+  render() {
+  // 修改这行下面的代码
+  if (this.state.display === true) {
+    return (
+      <div>
+      <button onClick={this.toggleDisplay}>Toggle Display</button>
+      <h1>Displayed!</h1>
+      </div>
+      );
+  } else {
+      return (
+      <div>
+      <button onClick={this.toggleDisplay}>Toggle Display</button>
+      </div>
+      );
+    }
+  }
+};
+
+
+使用 && 获得更简洁的条件
+if/else 语句在上一次挑战中是有效的，但是有一种更简洁的方法可以达到同样的结果。 
+假设正在跟踪组件中的几个条件，并且希望根据这些条件中的每一个来渲染不同的元素。 
+如果你写了很多 else if 语句来返回稍微不同的 UI，你可能会写很多重复代码，这就留下了出错的空间。 
+相反，你可以使用 && 逻辑运算符以更简洁的方式执行条件逻辑。 这是完全可行的，因为你希望检查条件是否为 true。如果是，则返回一些标记。 下面是一个示例：
+{condition && <p>markup</p>}
+如果 condition 为 true，则返回标记。 如果条件为 false ，则在评估 condition 后操作将立即返回 false，并且不返回任何内容。 
+可以将这些语句直接包含在 JSX 中，并通过在每个条件后面写 && 来将多个条件串在一起。 这允许你在 render() 方法中处理更复杂的条件逻辑，而无需重复大量代码。
+再来看看前面的示例，h1 还是在 display 为 true 时渲染，但使用 && 逻辑运算符代替 if/else 语句。
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      display: true
+    }
+    this.toggleDisplay = this.toggleDisplay.bind(this);
+  }
+  toggleDisplay() {
+    this.setState(state => ({
+      display: !state.display
+    }));
+  }
+  render() {
+    return (
+       <div>
+         <button onClick={this.toggleDisplay}>Toggle Display</button>
+         {this.state.display && <h1>Displayed!</h1>}
+       </div>
+    );
+  }
+};
+
+
+使用三元表达式进行条件渲染
+在继续使用动态渲染技术之前，还有最后一种方法可以渲染想要的东西，它使用内置的 JavaScript 条件：三元运算符。 
+三元运算符经常被用作 JavaScript 中 if/else 语句的缩写。 
+它们不像传统的 if/else 语句那样强大，但是在 React 开发人员中非常流行， 原因之一就是 JSX 的编译原理，if/else 语句不能直接插入到 JSX 代码中。 
+可能你在前几个挑战就注意到了这一点——当需要 if/else 语句时，它总是在 return 语句的外面。 
+如果想在 JSX 中实现条件逻辑，三元表达式是一个很好的选择。 回想一下，三元运算符有三个部分，但是可以将多个三元表达式组合在一起。 以下是基本语法：
+condition ? expressionIfTrue : expressionIfFalse;
+代码编辑器在 CheckUserAge 组件的 render() 方法中定义了三个常量， 它们分别是 buttonOne、buttonTwo 和 buttonThree。 
+每个都分配了一个表示按钮元素的简单 JSX 表达式。 首先，使用 input 和 userAge 初始化 CheckUserAge 的 state，并将其值设置为空字符串。
+一旦组件将信息渲染给页面，用户应该有一种方法与之交互。 
+在组件的 return 语句中，设置一个实现以下逻辑的三元表达式：当页面首次加载时，将提交按钮 buttonOne 渲染到页面。 
+然后，当用户输入年龄并点击该按钮时，根据年龄渲染不同的按钮。 如果用户输入的数字小于18，则渲染buttonThree。 
+如果用户输入的数字大于或等于18，则渲染buttonTwo。
+const inputStyle = {
+  width: 235,
+  margin: 5
+};
+
+class CheckUserAge extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: '',
+      userAge: ''
+    };
+    this.submit = this.submit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(e) {
+    this.setState({
+      input: e.target.value,
+      userAge: ''
+    });
+  }
+  submit() {
+    this.setState(state => ({
+      userAge: state.input
+    }));
+  }
+  render() {
+    const buttonOne = <button onClick={this.submit}>Submit</button>;
+    const buttonTwo = <button>You May Enter</button>;
+    const buttonThree = <button>You Shall Not Pass</button>;
+    return (
+      <div>
+        <h3>Enter Your Age to Continue</h3>
+        <input
+          style={inputStyle}
+          type='number'
+          value={this.state.input}
+          onChange={this.handleChange}
+        />
+        <br />
+        {this.state.userAge === '' ? buttonOne : this.state.userAge < 18 ? buttonThree : buttonTwo}
+      </div>
+    );
+  }
+}
+
+
+使用 Props 有条件地渲染
+到目前为止，你已经了解了如何使用 if/else、&& 和三元运算符（condition ? expressionIfTrue : expressionIfFalse）来决定渲染什么和何时渲染。 
+然而，还有一个重要的话题需要讨论，它可以让你将这些概念中的一个或所有与另一个强大的 React 特性结合起来：props。 
+使用 props 有条件地渲染代码对于 React 开发人员来说非常常见——也就是说，他们使用给定 props 的值来自动决定要渲染什么。
+在这个挑战中，将设置一个子组件来根据 props 做出渲染决定。 可以使用三元运算符，但是可以看到过去几个挑战中涵盖的其他几个概念在这种情况下可能同样有用。
+代码编辑器有两个部分定义了的组件：一个名为 GameOfChance 的父组件和一个名为 Results 的子组件。 它们被用来创建一个简单的游戏，用户按下按钮来看它们是赢还是输。
+首先，需要一个简单的表达式，每次运行时都会随机返回一个不同的值。 可以使用 Math.random()。 每次调用此方法时，此方法返回 0（包括）和 1（不包括）之间的值。 
+因此，对于 50/50 的几率，请在表达式中使用 Math.random() >= .5。 从统计学上讲，这个表达式有 50％ 的几率返回 true，另外 50％ 返回 false。 
+在 render 方法里，用此表达式替换 null 以完成变量声明。
+现在你有了一个表达式，可以使用该表达式在代码中做出随机决策。 接下来，需要实现此功能。 
+将 Results 组件渲染为 GameOfChance 的子 组件，并将 expression 作为名为 fiftyFifty 的 prop 传入 。 
+在 Results 组件中，编写一个三元表达式来渲染 h1 元素的文本。GameOfChance 传来的 prop fiftyFifty 来决定渲染文本 You Win! 还是 You Lose!。 
+最后，确保 handleClick() 方法正确计算每个回合，以便用户知道他们玩过多少次。 这也可以让用户知道组件实际上已经更新，以防他们连续赢两次或输两次时自己不知道。
+class Results extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return <h1>{this.props.fiftyFifty ? 'You Win!' : 'You Lose!'}</h1>;
+  }
+}
+
+class GameOfChance extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      counter: 1
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
+  handleClick() {
+    this.setState(prevState => {
+      return {
+        counter: prevState.counter + 1
+      }
+    });
+  }
+  render() {
+    const expression = Math.random() >= 0.5;
+    return (
+      <div>
+      <button onClick={this.handleClick}>Play Again</button>
+      <Results fiftyFifty={expression} />
+      <p>{'Turn: ' + this.state.counter}</p>
+      </div>
+    );
+  }
+}
+
+
+根据组件状态有条件地更改内联 CSS
+此时，已经看到了一些条件渲染的应用程序和内联样式的使用。 这里还有一个将这两个主题结合在一起的例子。 
+你也可以根据 React 组件的 state 有条件地渲染 CSS。 要执行此操作，请检查条件，如果满足该条件，则修改在 render 方法中分配给 JSX 元素的样式对象。
+理解这个模式很重要，因为相比传统的方式（这在 jQuery 中非常常见），直接修改 DOM 元素来应用样式的方法是一个戏剧性的转变。 
+在该方法中，必须跟踪元素何时更改并直接处理实际操作。 跟踪更改可能变得很困难，可能会使 UI无法预测。 
+当根据一个条件设置一个样式对象时，描述了 UI 作为应用程序的状态函数应当如何展现。 
+如此便有一个清晰的单向流动的信息流。 这是使用 React 编写应用程序时的首选方法。
+
+代码编辑器有一个简单的带有边框样式的受控 input 组件。 如果用户在输入框中键入超过 15 个字符的文本，希望将此边框变成红色。 
+添加一个条件来检查这一点，如果条件有效，则将 input 的边框样式设置为3px solid red。 可以通过在 input 中输入文本来检测它。
+class GateKeeper extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(event) {
+    this.setState({ input: event.target.value })
+  }
+  render() {
+    let inputStyle = {
+      border: '1px solid black'
+    };
+
+    // 添加一个条件来检查输入字符数量是否超过15个
+    if (this.state.input.length > 15) {
+      inputStyle.border = '3px solid red';
+    }
+
+    return (
+      <div>
+        <h3>Don't Type Too Much:</h3>
+        <input
+          type="text"
+          style={inputStyle}
+          value={this.state.input}
+          onChange={this.handleChange} />
+      </div>
+    );
+  }
+};
+
+
+使用 Array.map() 动态渲染元素
+条件渲染很有用，但是可能需要组件来渲染未知数量的元素。 
+通常在响应式编程中，程序员在应用程序运行时之前无法知道其 state，因为这在很大程度上取决于用户与该程序的交互。 
+程序员需要提前编写代码来正确处理未知状态。 在 React 中使用 Array.map() 阐明了这个概念。
+例如，创建一个简单的 “To Do List” 应用程序。 作为程序员，你无法知道用户可能在其列表中有多少项。 
+需要设置组件，以便在使用该程序的人决定今日待办事项之前动态渲染列表元素的正确数量。
+代码编辑器完成了 MyToDoList 组件的大部分设置。 如果完成了受控表单挑战，这些代码中的一些应该看起来很熟悉。 
+你会注意到一个 textarea 和一个 button，以及一些跟踪它们状态的方法，但是页面当前还没有任何东西被渲染。
+在 constructor 中，创建一个 this.state 对象并定义两个 state：userInput 应该初始化为空字符串，toDoList 应该初始化为空数组。 
+接下来，在 render() 方法中删除 items 变量的 null 值。 取而代之的是，将存储在组件内部 state 中的 toDoList 数组一一遍历，并相应地动态呈现在 li 元素中。 
+尝试在 textarea 中输入 eat, code, sleep, repeat，然后点击按钮，看看会发生什么。
+注意： 像这样的映射操作创建的所有兄弟子元素都需要提供唯一的 key 属性。 别担心，这是下一个挑战的主题。
+const textAreaStyles = {
+  width: 235,
+  margin: 5
+};
+
+class MyToDoList extends React.Component {
+  constructor(props) {
+    super(props);
+    // 修改这行下面的代码
+    this.state = {
+        userInput: '',
+        toDoList: []
+      };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    // 修改这行上面的代码
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleSubmit() {
+    const itemsArray = this.state.userInput.split(',');
+    this.setState({
+      toDoList: itemsArray
+    });
+  }
+  handleChange(e) {
+    this.setState({
+      userInput: e.target.value
+    });
+  }
+  render() {
+      const items = this.state.toDoList.map((item, index) => (
+    <li key={index}>{item}</li>
+  ));
+    return (
+      <div>
+        <textarea
+          onChange={this.handleChange}
+          value={this.state.userInput}
+          style={textAreaStyles}
+          placeholder='Separate Items With Commas'
+        />
+        <br />
+        <button onClick={this.handleSubmit}>Create List</button>
+        <h1>My "To Do" List:</h1>
+        <ul>{items}</ul>
+      </div>
+    );
+  }
+}
+
+
+给同级元素一个唯一的键属性
+上一个挑战展示了如何使用 map 方法根据用户输入动态渲染多个元素。 然而，这个例子中缺少一个重要的部分。 
+创建元素数组时，每个元素都需要一个设置为唯一值的 key 属性。 React 使用这些键来跟踪哪些项目被添加、更改或删除。 这有助于在以任何方式修改列表时提高重新渲染过程的效率。
+注意： 键只需要在兄弟元素之间是唯一的，它们不需要在应用程序中是全局唯一的。
+代码编辑器有一个数组，它包含一些前端框架和一个名为 Frameworks() 的无状态函数组件。 
+Frameworks() 需要将数组映射到无序列表，就像上一个挑战一样。 完成 map 回调，为 frontEndFrameworks 数组中的每个框架返回一个 li 元素。 
+这次，确保给每个 li 的 key 属性设置一个唯一的值。 li 元素还应该包含来自 frontEndFrameworks 的文本。
+通常，希望使 key 能唯一标识要渲染的元素。 数组索引可以是最后的选择，但通常你应该尝试使用唯一标识。
+const frontEndFrameworks = [
+  'React',
+  'Angular',
+  'Ember',
+  'Knockout',
+  'Backbone',
+  'Vue'
+];
+
+function Frameworks() {
+  const renderFrameworks = frontEndFrameworks.map((framework, index) => (
+    <li key={index}>{framework}</li>
+  ));
+
+  return (
+    <div>
+      <h1>Popular Front End JavaScript Frameworks</h1>
+      <ul>
+        {renderFrameworks}
+      </ul>
+    </div>
+  );
+};
+
+
+使用 Array.Filter() 动态过滤数组
+map 数组方法是一个强大的工具，在使用 React 时经常使用。 与 map 相关的另一种方法是 filter，它根据条件过滤数组的内容，然后返回一个新数组。 
+例如，如果有一个 users 数组，每个数组元素都有一个可以设置为 true 或 false 的 online 属性，可以这样只过滤那些在线的用户：
+let onlineUsers = users.filter(user => user.online);
+在代码编辑器中，MyComponent 的 state 被初始化为一个用户数组。 有些用户在线，有些则没有。 过滤数组，以便只查看在线用户。 
+要执行此操作，请首先使用 filter 返回仅包含 online 属性为 true 的用户的新数组。 
+然后，在 renderOnline 变量中，映射已过滤的数组，并为包含其 username 文本的每个用户返回 li 元素。 确保包含一个唯一的 key，就像上一个挑战一样。
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: [
+        {
+          username: 'Jeff',
+          online: true
+        },
+        {
+          username: 'Alan',
+          online: false
+        },
+        {
+          username: 'Mary',
+          online: true
+        },
+        {
+          username: 'Jim',
+          online: false
+        },
+        {
+          username: 'Sara',
+          online: true
+        },
+        {
+          username: 'Laura',
+          online: true
+        }
+      ]
+    };
+  }
+  render() {
+    const usersOnline = this.state.users.filter(user => user.online);
+    const renderOnline = usersOnline.map(user => (
+      <li key={user.username}>{user.username}</li>
+    ));
+    return (
+      <div>
+        <h1>Current Online Users:</h1>
+        <ul>{renderOnline}</ul>
+      </div>
+    );
+  }
+}
+
+
+用 renderToString 在服务器上渲染 React
+到目前为止，已经能够在客户端上渲染 React 组件， 一般来说我们都是这么做的。 然而，在一些用例中，需要在服务器上渲染一个 React 组件。 
+由于 React 是一个 JavaScript 视图库，所以通常使用 Node 让 JavaScript 运行在服务器上。 事实上，React 提供了一个可用于此目的的 renderToString() 方法。
+有两个关键原因可以解释为什么服务器上的渲染可能会在真实世界的应用程序中使用。 
+首先，如果不这样做，当 React 应用程序最初加载到浏览器时，它将包含一个代码量很少的 HTML 文件和一大堆 JavaScript。 
+这对于搜索引擎来说可能不太理想，因为它们试图为网页内容生成索引，以便人们可以找到这个应用。 
+如果在服务器上渲染初始 HTML 标记并将其发送到客户端，则初始页面加载的内容包含搜索引擎可以抓取的所有页面标记。 
+其次，这创造了更快的初始页面加载体验，因为渲染的 HTML 代码量要比整个应用程序的 JavaScript 代码小。 React 仍然能够识别你的应用并在初始加载后进行管理。
+renderToString() 方法由 ReactDOMServer 提供，在这里已为你定义成全局变量。 这个方法接收一个 React 元素作为参数。 用它来把 App 渲染成字符串。
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return <div/>
+  }
+};
+
+// 修改这行下面的代码
+const appString = ReactDOMServer.renderToString(<App/>);
+
+
