@@ -1,0 +1,183 @@
+使用 onclick 属性处理点击事件
+你希望代码仅在页面完成加载后执行。 为此，你可将名为DOMContentLoaded的 JavaScript 事件附加到文档中。 以下是实现的代码：
+document.addEventListener('DOMContentLoaded', function() {
+
+});
+你可以在DOMContentLoaded函数内部添加事件处理方法。 你可以通过添加以下代码来添加 onclick 事件处理器，当用户点击 id 为#getMessage 的元素时会触发事件：
+document.getElementById('getMessage').onclick = function(){};
+在DOMContentLoaded函数内为 id 为getMessage的元素添加一个 click 事件处理器。
+
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    // 在这行下面添加代码
+    document.getElementById('getMessage').onclick = function(){};
+    // 在这行上面添加代码
+  });
+</script>
+
+<style>
+  body {
+    text-align: center;
+    font-family: "Helvetica", sans-serif;
+  }
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .box {
+    border-radius: 5px;
+    background-color: #eee;
+    padding: 20px 5px;
+  }
+  button {
+    color: white;
+    background-color: #4791d0;
+    border-radius: 5px;
+    border: 1px solid #4791d0;
+    padding: 5px 10px 8px 10px;
+  }
+  button:hover {
+    background-color: #0F5897;
+    border: 1px solid #0F5897;
+  }
+</style>
+<h1>Cat Photo Finder</h1>
+<p class="message box">
+  The message will go here
+</p>
+<p>
+  <button id="getMessage">
+    Get Message
+  </button>
+</p>
+
+
+通过单击事件更改文本
+当点击事件发生时，你可以使用 JavaScript 更新 HTML 元素。
+例如，当用户点击 Get Message 按钮时，它将改变 class 为 message 的元素的文本为 Here is the message。
+通过在点击事件内添加以下代码实现：
+document.getElementsByClassName('message')[0].textContent="Here is the message";
+在 onclick 事件处理器中添加代码，改变 message 元素内的文本为 Here is the message。
+
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    document.getElementById('getMessage').onclick = function(){
+      // 在这行下面添加代码
+      document.getElementsByClassName('message')[0].textContent = "Here is the message";
+      // 在这行上面添加代码
+    }
+  });
+</script>
+
+<style>
+  body {
+    text-align: center;
+    font-family: "Helvetica", sans-serif;
+  }
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .box {
+    border-radius: 5px;
+    background-color: #eee;
+    padding: 20px 5px;
+  }
+  button {
+    color: white;
+    background-color: #4791d0;
+    border-radius: 5px;
+    border: 1px solid #4791d0;
+    padding: 5px 10px 8px 10px;
+  }
+  button:hover {
+    background-color: #0F5897;
+    border: 1px solid #0F5897;
+  }
+</style>
+
+<h1>Cat Photo Finder</h1>
+<p class="message box">
+  The message will go here
+</p>
+<p>
+  <button id="getMessage">
+    Get Message
+  </button>
+</p>
+
+
+使用 XMLHttpRequest 方法获取 JSON
+你还可以从外部来源请求数据。 这就是 API 发挥作用的地方。
+请记住，API（或叫应用程序编程接口）是计算机用来互相通信的工具。 你将学习如何通过 AJAX技术 从 API 获得的数据来更新 HTML。
+大部分 web APIs 以 JSON 格式传输数据。 JSON 是 JavaScript Object Notation 的简写。
+JSON 语法与 JavaScript 对象字面符号非常相似。 JSON 具有对象属性以及其当前值，夹在 { 和 }之间。
+这些属性及其值通常称为 "键值对"。
+但是，JSON 是由 API 以bytes 形式传输的，你的程序以string接受它。 它们能转换成为 JavaScript 对象，但默认情况下它们不是 JavaScript 对象。 
+JSON.parse方法解析字符串并构造它描述的 JavaScript 对象。
+你可以从 freeCodeCamp 的 Cat Photo API 请求 JSON。 以下是你可以在点击事件中添加的代码：
+const req = new XMLHttpRequest();
+req.open("GET",'/json/cats.json',true);
+req.send();
+req.onload = function(){
+  const json = JSON.parse(req.responseText);
+  document.getElementsByClassName('message')[0].innerHTML = JSON.stringify(json);
+};
+这里介绍每行代码的作用。 JavaScript XMLHttpRequest 对象具有许多用于传输数据的属性和方法。 
+首先，创建一个XMLHttpRequest对象实例，并保存在req变量里 。 
+然后，open 方法初始化一个请求——这个例子是从 API 请求数据，因此它是一个 GET 请求。 
+第二个参数 open 是你要从中请求数据的 API 的 URL。 第三个参数是一个布尔值， true 使其成为异步请求。 send 方法发送请求。 
+最后，onload 事件处理程序解析返回的数据并应用该 JSON.stringify 方法将JavaScript对象转换为字符串， 然后将此字符串作为消息文本插入。
+更新代码，创建并向 freeCodeCamp Cat Photo API 发送 GET 请求。 然后单击 Get Message 按钮。 AJAX 函数将使用 API​​ 的原始 JSON 输出替换文本 The message will go here。
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    document.getElementById('getMessage').onclick=function(){
+      const req = new XMLHttpRequest();
+      req.open("GET", '/json/cats.json', true);
+      req.send();
+      req.onload = function(){
+        const json = JSON.parse(req.responseText);
+        document.getElementsByClassName("message")[0].innerHTML = JSON.stringify(json);
+      }
+    };
+  });
+</script>
+
+<style>
+  body {
+    text-align: center;
+    font-family: "Helvetica", sans-serif;
+  }
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .box {
+    border-radius: 5px;
+    background-color: #eee;
+    padding: 20px 5px;
+  }
+  button {
+    color: white;
+    background-color: #4791d0;
+    border-radius: 5px;
+    border: 1px solid #4791d0;
+    padding: 5px 10px 8px 10px;
+  }
+  button:hover {
+    background-color: #0F5897;
+    border: 1px solid #0F5897;
+  }
+</style>
+
+<h1>Cat Photo Finder</h1>
+<p class="message box">
+  The message will go here
+</p>
+<p>
+  <button id="getMessage">
+    Get Message
+  </button>
+</p>
+
+
